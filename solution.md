@@ -24,7 +24,4 @@ You could install the app using the following command.
 ./gradlew :app:installDebug
 ```
 
-## Ambiguity Notes
-
-For the time being, the UI is not well polished. I would gladly optimize it based on the requirement from the UI designer.
-
+Add Doc
