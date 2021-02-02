@@ -18,17 +18,6 @@ The overall architecture is based on this Repo: <https://github.com/bufferapp/an
 * It uses [Scabbard](https://arunkumar9t2.github.io/scabbard/) to visualize Dagger 2 dependency graphs as the below image.
 ![Dagger Graph](doc/10_di_graph.png?raw=true "Dagger Graph")
 
-### App launch with network connected.
-![Normal](doc/1_normal.gif?raw=true "Normal")
-### App launch with network off.
-![Network Down](doc/4_network_down.gif?raw=true "Network Down")
-### App screen rotation.
-![Screen rotate](doc/3_screen_rotate.gif?raw=true "Screen rotate")
-### Click item to show detail.
-![To detail](doc/2_list_to_detail.gif?raw=true "To detail")
-
-For more detail, please refer to comment inside the code.
-
 ## Requirements
 
 You could install the app using the following command.
