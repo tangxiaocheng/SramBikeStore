@@ -1,6 +1,5 @@
-# Solution: {github-tangxiaocheng}
 
-Date: 12/14/2020
+Date: 02/02/2020
 
 ## Summary
 
