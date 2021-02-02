@@ -7,7 +7,7 @@ import com.uber.autodispose.ScopeProvider
 import javax.inject.Inject
 /*
 *
-*
+* Observe the signal from UI and transform the signal to the command of fetching data through use case.
 *
 * */
 @FragmentScope
@@ -21,7 +21,7 @@ class MainFragmentPresenter @Inject constructor(
         mainFragmentCallback.loadingMoreSignal()
             .map { Token(pageTokenRepo.get()) }
             .startWith(Token())
-            .distinct()
+            .distinct()//avoid duplicated page token applied.
             .map { Param(location, it) }
             .switchMapSingle { useCase.execute(it) }
             .`as`(autoDisposable(scopeProvider))
