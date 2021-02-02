@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SRAM bike store</string>
+    <string name="network_error_tip">Please check network connection</string>
+    <string name="detail">Bike Store Detail</string>
+    <string name="save">Save</string>
+    <string name="original_list">Original List</string>
+    <string name="fav">Favorite</string>
+    <string name="bike_store_photo">bike store photo</string>
+    <string name="network_disconnected">Network Disconnected</string>
+    <string name="no_near_by_bike_store">No nearby Bike store</string>
+    <string name="no_more_data">No more data</string>
+    <string name="apply_default_location">Apply Default location </string>
+    <string name="place_holder_string">2988 Lauri place</string>
+    <string name="place_holder_num">135</string>
+    <string name="place_holder_dist">18 mi</string>
+    <string name="map_icon">map icon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="getting_your_current_device_location">Getting your current device location</string>
+    <string name="share">share</string>
+</resources>

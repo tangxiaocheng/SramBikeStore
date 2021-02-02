@@ -1,0 +1,50 @@
+{
+  "html_attributions": [],
+  "next_page_token": "mockPageToken",
+  "results": [
+    {
+      "business_status": "OPERATIONAL",
+      "geometry": {
+        "location": {
+          "lat": 47.6203442,
+          "lng": -122.3297537
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 47.6217418802915,
+            "lng": -122.3287446197085
+          },
+          "southwest": {
+            "lat": 47.6190439197085,
+            "lng": -122.3314425802915
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "name": "REI",
+      "opening_hours": {
+        "open_now": true
+      },
+      "place_id": "ChIJa_52_zMVkFQRIsX5KSvv41k",
+      "plus_code": {
+        "compound_code": "JMCC+43 Seattle, WA, USA",
+        "global_code": "84VVJMCC+43"
+      },
+      "price_level": 3,
+      "rating": 4.7,
+      "reference": "ChIJa_52_zMVkFQRIsX5KSvv41k",
+      "scope": "GOOGLE",
+      "types": [
+        "shoe_store",
+        "bicycle_store",
+        "point_of_interest",
+        "clothing_store",
+        "store",
+        "establishment"
+      ],
+      "user_ratings_total": 2147,
+      "vicinity": "222 Yale Avenue North, Seattle"
+    }
+  ],
+  "status": "OK"
+}

@@ -1,0 +1,190 @@
+{
+  "html_attributions" : [],
+  "results" : [
+    {
+      "business_status" : "OPERATIONAL",
+      "geometry" : {
+        "location" : {
+          "lat" : 47.6115901,
+          "lng" : -122.2017231
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 47.61295977989273,
+            "lng" : -122.2003219701073
+          },
+          "southwest" : {
+            "lat" : 47.61026012010728,
+            "lng" : -122.2030216298927
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "name" : "Default First Gregg's Bellevue Cycle",
+      "opening_hours" : {
+        "open_now" : false
+      },
+      "photos" : [
+        {
+          "height" : 3024,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/109116123978428851692\"\u003eJames Mowery\u003c/a\u003e"
+          ],
+          "photo_reference" : "ATtYBwInD--RL12hdwcPOPgVknuFzrfWCOAqoBc7V2Bl3ZhWul73mYXUDSW5HfGIHVOd0nBzPMwHx18t1v7FCXx4xLWD4lABzjMQzEnXv3dZrLw-oj8EAJNxTJ-I5CaDlx0abEeRx_ITQQ5l9Z1J7-lbv_vCggRjlw_TxtF5zR6oRyaPAMi2",
+          "width" : 4032
+        }
+      ],
+      "place_id" : "ChIJw1LMZIdskFQRB064zYMhZs4",
+      "plus_code" : {
+        "compound_code" : "JQ6X+J8 Bellevue, Washington",
+        "global_code" : "84VVJQ6X+J8"
+      },
+      "rating" : 4,
+      "reference" : "ChIJw1LMZIdskFQRB064zYMhZs4",
+      "scope" : "GOOGLE",
+      "types" : [ "bicycle_store", "point_of_interest", "store", "establishment" ],
+      "user_ratings_total" : 123,
+      "vicinity" : "105 Bellevue Way NE, Bellevue"
+    },
+    {
+      "business_status" : "OPERATIONAL",
+      "geometry" : {
+        "location" : {
+          "lat" : 47.62005569999999,
+          "lng" : -122.1789103
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 47.62140172989272,
+            "lng" : -122.1776486201073
+          },
+          "southwest" : {
+            "lat" : 47.61870207010727,
+            "lng" : -122.1803482798927
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+      "name" : "Stay Tuned Bikes",
+      "opening_hours" : {
+        "open_now" : false
+      },
+      "photos" : [
+        {
+          "height" : 968,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/109960654470926981491\"\u003eStay Tuned Bikes\u003c/a\u003e"
+          ],
+          "photo_reference" : "ATtYBwK17wTAmBh0MUeNrPH-iCwSgGJy72ViD-g_6HimRLTNxm4i3zg6Ugx1XBz4eAotoT16whNTfMttpMFBpo0hAsTTXe1vSIfbUas8aQ9AMenV5_zxW_eetz7tQoRdTtPl-0mC25RQN33oc844elWd0XquRXE5TWSL3sWfqyW1vmalgA6l",
+          "width" : 1296
+        }
+      ],
+      "place_id" : "ChIJBeN62_VskFQRt2DMtn7CplE",
+      "plus_code" : {
+        "compound_code" : "JRCC+2C Bellevue, Washington",
+        "global_code" : "84VVJRCC+2C"
+      },
+      "rating" : 4.8,
+      "reference" : "ChIJBeN62_VskFQRt2DMtn7CplE",
+      "scope" : "GOOGLE",
+      "types" : [ "point_of_interest", "establishment" ],
+      "user_ratings_total" : 48,
+      "vicinity" : "12001 NE 12th St #82, Bellevue"
+    },
+    {
+      "business_status" : "OPERATIONAL",
+      "geometry" : {
+        "location" : {
+          "lat" : 47.6133876,
+          "lng" : -122.1847696
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 47.61477047989272,
+            "lng" : -122.1832261201072
+          },
+          "southwest" : {
+            "lat" : 47.61207082010728,
+            "lng" : -122.1859257798927
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "name" : "REI",
+      "opening_hours" : {
+        "open_now" : false
+      },
+      "photos" : [
+        {
+          "height" : 1080,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/104663388595934734298\"\u003enathan Leb\u003c/a\u003e"
+          ],
+          "photo_reference" : "ATtYBwLwPiSdyQwUvI8vgJ6rcFIEMaG5okVTqdP8Rd20pRE9SDstx04LenYWYc0JMnbVJHW91qzhyC1nacaWIwivB2ZKurnWhZ1JxnOFQGgJIFthyCwt9ESmD7VUJUc59UKoMRD339BJy2X-tVqfRqDgRzZuluTlLwTylbtbk1vahUgHnj65",
+          "width" : 1920
+        }
+      ],
+      "place_id" : "ChIJBwRkE2FskFQRjuE6Sw1qe1Y",
+      "plus_code" : {
+        "compound_code" : "JR78+93 Bellevue, Washington",
+        "global_code" : "84VVJR78+93"
+      },
+      "rating" : 4.4,
+      "reference" : "ChIJBwRkE2FskFQRjuE6Sw1qe1Y",
+      "scope" : "GOOGLE",
+      "types" : [
+        "shoe_store",
+        "bicycle_store",
+        "point_of_interest",
+        "clothing_store",
+        "store",
+        "establishment"
+      ],
+      "user_ratings_total" : 645,
+      "vicinity" : "410 116th Ave NE, Bellevue"
+    },
+    {
+      "business_status" : "OPERATIONAL",
+      "geometry" : {
+        "location" : {
+          "lat" : 47.602998,
+          "lng" : -122.1367489
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 47.60424622989272,
+            "lng" : -122.1353889201073
+          },
+          "southwest" : {
+            "lat" : 47.60154657010728,
+            "lng" : -122.1380885798928
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/shopping-71.png",
+      "name" : "Nearest WheelLab",
+      "photos" : [
+        {
+          "height" : 1632,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/113361530510495386959\"\u003eA Google User\u003c/a\u003e"
+          ],
+          "photo_reference" : "ATtYBwLMxnT0BJB5G9dASCl6r0pmqhZB9x-tCtO7hS38BWHnQ5TEkmjlrCzKg9etSUBL6iBRVKZ_Rtx1mioQE_jJABfZRyffO5aZdFjQgl_RylFITpJsxyxRKtv9im5DPxCwsuNfGXU30wItOiiEo0HFh0uv95mL5OOH4Om5UvFa4rjwJDDV",
+          "width" : 1224
+        }
+      ],
+      "place_id" : "ChIJVVVl5jNskFQRbiAQMdjENiM",
+      "plus_code" : {
+        "compound_code" : "JV37+58 Bellevue, Washington",
+        "global_code" : "84VVJV37+58"
+      },
+      "rating" : 5,
+      "reference" : "ChIJVVVl5jNskFQRbiAQMdjENiM",
+      "scope" : "GOOGLE",
+      "types" : [ "bicycle_store", "point_of_interest", "store", "establishment" ],
+      "user_ratings_total" : 3,
+      "vicinity" : "15228 Lake Hills Blvd, Bellevue"
+    }
+  ],
+  "status" : "OK"
+}

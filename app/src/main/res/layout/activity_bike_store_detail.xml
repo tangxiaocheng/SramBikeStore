@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detail_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/item_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/card_view_h_margin"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/store_photo_iv"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginBottom="@dimen/card_view_h_margin"
+                android:contentDescription="@string/bike_store_photo"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/bike_store_photo_sample" />
+
+            <TextView
+                android:id="@+id/store_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_h_margin"
+                android:layout_marginVertical="@dimen/card_view_h_margin"
+                android:text="@string/app_name"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_h_margin"
+                android:layout_marginBottom="@dimen/card_view_h_margin">
+
+                <TextView
+                    android:id="@+id/rating_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:text="@string/place_holder_num"
+                    android:textAppearance="?attr/textAppearanceListItemSmall" />
+
+                <RatingBar
+                    android:id="@+id/store_rb"
+                    style="@style/RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_toEndOf="@+id/rating_tv"
+                    android:numStars="5"
+                    android:rating="3.5"
+                    android:stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/total_rating_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/store_rb"
+                    android:gravity="center_vertical"
+                    android:text="@string/place_holder_num"
+                    android:textAppearance="?attr/textAppearanceListItemSmall" />
+
+                <TextView
+                    android:id="@+id/store_dist_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/text_h_margin"
+                    android:layout_marginVertical="@dimen/card_view_h_margin"
+                    android:layout_toEndOf="@+id/total_rating_tv"
+                    android:text="@string/place_holder_dist" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_h_margin">
+
+                <ImageView
+                    android:id="@+id/map_icon_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/map_icon"
+                    android:src="@drawable/ic_baseline_map_12" />
+
+                <TextView
+                    android:id="@+id/store_address_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginVertical="@dimen/card_view_h_margin"
+                    android:layout_toEndOf="@+id/map_icon_iv"
+                    android:gravity="center_vertical"
+                    android:text="@string/place_holder_string"
+                    android:textAppearance="?attr/textAppearanceListItemSecondary" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.fragment.app.FragmentContainerView
+        app:layout_constraintTop_toBottomOf="@+id/detail_activity_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/item_cv"
+        android:id="@+id/map_fragment_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
