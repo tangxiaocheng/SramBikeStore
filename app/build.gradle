@@ -68,8 +68,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     def okhttp3Version = '4.9.0'
     implementation "com.squareup.okhttp3:okhttp:$okhttp3Version"
@@ -100,32 +98,43 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
-
+    // For image loading.
     implementation("io.coil-kt:coil:1.1.1")
 
+
+    // Google map
     implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation 'junit:junit:4.13.1'
+
+    // For fixing up mockito mock problem
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
     testImplementation 'org.mockito:mockito-core:3.7.0'
+    testImplementation 'org.mockito:mockito-inline:2.8.47'
     testImplementation 'com.google.truth:truth:1.1'
+
+    //A log library
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    //A Rxjava library for monitoring network connectivity
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.8'
 
-    //noinspection GradleDependency
+    //A library for easy permission management.
     implementation 'com.github.tbruyelle:rxpermissions:0.11'
 
     testImplementation 'commons-io:commons-io:2.8.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    // Mockito
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
-    testImplementation 'org.mockito:mockito-inline:2.8.47'
 
+
+    // Pull to refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // A delay interceptor library for delay network request
     implementation 'com.github.pawel-schmidt:okhttp-delay-interceptor:0.0.1'
+
     //noinspection GradleDependency  "Android SDK 29 requires Java 9 (have Java 8)."
     testImplementation 'org.robolectric:robolectric:4.3.1'
 

@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 /**
  * Wrap up map fragment:[SupportMapFragment].
  * Used in two place: [app.sram.bikestore.main.MainFragment] and [BikeStoreDetailActivity]
- * Only receive [ScramLocation] as parameter
+ * Only receive [ScramLocation] as parameter.
  */
 class GoogleMapWrapperFragment : SupportMapFragment(), OnMapReadyCallback {
 

@@ -10,6 +10,11 @@ import app.sram.bikestore.di.ui.FragmentScope;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import kotlin.Unit;
+
+/**
+ * This provide the raw source of laading more signals. It could send multiple signal.
+ * We are to intercept it in presenter and transform it to page token to avoid duplicated signal.
+ */
 @FragmentScope
 public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
 

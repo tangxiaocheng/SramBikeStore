@@ -9,6 +9,10 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import javax.inject.Inject
 
+/**
+ * The use case conducts the business logic such as the sorting here. It does not care about how the repository is providing the data.
+ * It could consume multiple repository.
+ */
 class BikeStoreListUseCase @Inject constructor(
     private val bikeRepo: BikeRepo,
     @IOScheduler private val ioScheduler: Scheduler,
