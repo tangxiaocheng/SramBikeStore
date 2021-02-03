@@ -8,10 +8,12 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityModule {
 
     @FragmentScope
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [DeviceLocationFragment.Module::class])
     abstract fun contributeDeviceLocationFragment(): DeviceLocationFragment
 
     @FragmentScope
     @ContributesAndroidInjector(modules = [MainFragment.Module::class])
     abstract fun contributeMainFragment(): MainFragment
+
+
 }
