@@ -11,6 +11,8 @@ import app.sram.bikestore.data.HOME
 import app.sram.bikestore.data.ScramLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import java.lang.RuntimeException
+
 /*
 * Separation of concerns: In this Fragment, it only handles the logic of getting the location.
 * If it fails in getting the last location, the app will prompt to apply for the default sample location.
@@ -42,7 +44,11 @@ class DeviceLocationFragment : Fragment() {
 
     private fun updateLocation(location: Location?) {
         if (location == null) {
-            callback.onLocationReady(HOME)
+            if(this::callback.isInitialized){
+                callback.onLocationReady(HOME)
+            }else{
+                throw RuntimeException("callback has not been set")
+            }
         } else {
             callback.onLocationReady(toScramLocation(location))
         }
