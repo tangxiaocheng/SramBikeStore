@@ -7,20 +7,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import app.sram.bikestore.activity.MainFragment
+import app.sram.bikestore.activity.MainFragmentCallback
 import app.sram.bikestore.data.HOME
 import app.sram.bikestore.data.ScramLocation
+import app.sram.bikestore.di.ui.FragmentScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import dagger.Provides
+import dagger.android.support.DaggerFragment
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 /*
 * Separation of concerns: In this Fragment, it only handles the logic of getting the location.
 * If it fails in getting the last location, the app will prompt to apply for the default sample location.
 *
 * */
-class DeviceLocationFragment : Fragment() {
+class DeviceLocationFragment : DaggerFragment() {
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    @Inject
+    lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var callback: Callback
 
     companion object {
@@ -38,7 +45,6 @@ class DeviceLocationFragment : Fragment() {
     @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationClient.lastLocation.addOnSuccessListener { updateLocation(it) }
     }
 
@@ -64,5 +70,16 @@ class DeviceLocationFragment : Fragment() {
 
     interface Callback {
         fun onLocationReady(location: ScramLocation)
+    }
+
+
+    @dagger.Module
+    class Module {
+
+        @Provides
+        @FragmentScope
+        fun mainView(fragmentApp: DeviceLocationFragment): FusedLocationProviderClient {
+            return LocationServices.getFusedLocationProviderClient(fragmentApp.requireActivity())
+        }
     }
 }
