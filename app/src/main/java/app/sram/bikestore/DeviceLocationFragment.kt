@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import app.sram.bikestore.activity.MainFragment
-import app.sram.bikestore.activity.MainFragmentCallback
 import app.sram.bikestore.data.HOME
 import app.sram.bikestore.data.ScramLocation
 import app.sram.bikestore.di.ui.FragmentScope
+import app.sram.bikestore.util.toScramLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Provides
@@ -56,12 +54,8 @@ class DeviceLocationFragment : DaggerFragment() {
                 throw RuntimeException("callback has not been set")
             }
         } else {
-            callback.onLocationReady(toScramLocation(location))
+            callback.onLocationReady(location.toScramLocation())
         }
-    }
-
-    private fun toScramLocation(location: Location): ScramLocation {
-        return ScramLocation(lat = location.latitude, lng = location.longitude)
     }
 
     fun setCallback(callback: Callback) {
@@ -71,7 +65,6 @@ class DeviceLocationFragment : DaggerFragment() {
     interface Callback {
         fun onLocationReady(location: ScramLocation)
     }
-
 
     @dagger.Module
     class Module {
