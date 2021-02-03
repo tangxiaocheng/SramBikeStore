@@ -45,12 +45,18 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
 
     override fun getItemCount(): Int = stateList.size
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, index: Int) {
-        val bikeStoreItem = stateList[index]
-        val position = index + 1
-        holder.storeDistTv.text = "${formatDistance(bikeStoreItem.distance)} :$position"
+        bindData(holder, stateList[index], index + 1)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun bindData(
+        holder: ViewHolder,
+        bikeStoreItem: BikeStoreItem,
+        position: Int
+    ) {
         val store = bikeStoreItem.bikeStoreEntity
+        holder.storeDistTv.text = "${formatDistance(bikeStoreItem.distance)} :$position"
         holder.stateNameTv.text = store.name
         holder.ratingBar.rating = store.rating
         holder.ratingTv.text = store.rating.toString()
