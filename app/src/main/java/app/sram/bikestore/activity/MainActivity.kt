@@ -3,7 +3,6 @@ package app.sram.bikestore.activity
 import android.Manifest
 import android.os.Bundle
 import android.view.View
-import app.sram.bikestore.BlankFragment
 import app.sram.bikestore.DeviceLocationFragment
 import app.sram.bikestore.R
 import app.sram.bikestore.data.HOME
@@ -91,8 +90,7 @@ class MainActivity : DaggerAppCompatActivity(), DeviceLocationFragment.Callback 
 
     private fun bindMainFragment(scramLocation: ScramLocation) {
         supportFragmentManager.beginTransaction()
-//            .replace(R.id.container, MainFragment.newInstance(scramLocation))
-            .replace(R.id.container, BlankFragment.newInstance("hello","world"))
+            .replace(R.id.container, MainFragment.newInstance(scramLocation))
             .commit()
     }
 }
