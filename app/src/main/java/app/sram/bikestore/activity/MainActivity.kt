@@ -91,8 +91,8 @@ class MainActivity : DaggerAppCompatActivity(), DeviceLocationFragment.Callback 
 
     private fun bindMainFragment(scramLocation: ScramLocation) {
         supportFragmentManager.beginTransaction()
-//            .replace(R.id.container, MainFragment.newInstance(scramLocation))
-            .replace(R.id.container, BlankFragment.newInstance("hello","world"))
+            .replace(R.id.container, MainFragment.newInstance(scramLocation))
+//            .replace(R.id.container, BlankFragment.newInstance("hello","world"))
             .commit()
     }
 }
