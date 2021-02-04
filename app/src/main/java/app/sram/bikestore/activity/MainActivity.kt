@@ -24,7 +24,6 @@ class MainActivity : DaggerAppCompatActivity(), DeviceLocationFragment.Callback 
     lateinit var networkStatusHelper: NetworkStatusHelper
 
     lateinit var binding: ActivityMainBinding
-    lateinit var view:View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +34,6 @@ class MainActivity : DaggerAppCompatActivity(), DeviceLocationFragment.Callback 
     private fun initView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setSupportActionBar(binding.mainActivityToolbar)
-        view = binding.container
         setContentView(binding.root)
     }
 
@@ -68,23 +66,23 @@ class MainActivity : DaggerAppCompatActivity(), DeviceLocationFragment.Callback 
                 if (granted) {
                     bindDeviceLocationFragment()
                 } else {
-                    onLocationPermissionDenied()
+                    onLocationPermissionDenied(binding.container)
                 }
             }
     }
 
-    private fun onLocationPermissionDenied() {
-        showSnackBar(getString(R.string.apply_default_location))
+    private fun onLocationPermissionDenied(view: View) {
+        showSnackBar(view, getString(R.string.apply_default_location))
         bindMainFragment(HOME)
     }
 
-    private fun showSnackBar( message: String) {
+    private fun showSnackBar(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun onNetworkStatusUpdated( isConnectedToInternet: Boolean) {
+    private fun onNetworkStatusUpdated(isConnectedToInternet: Boolean) {
         if (!isConnectedToInternet) {
-            showSnackBar(resources.getString(R.string.network_disconnected))
+            Snackbar.make(findViewById(R.id.container), R.string.network_disconnected, Snackbar.LENGTH_LONG).show()
         }
     }
 
