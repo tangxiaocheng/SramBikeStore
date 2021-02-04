@@ -71,8 +71,8 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
             loadData(location)
         }
 
-        childFragmentManager.beginTransaction()
-            .replace(R.id.map_fragment_view, GoogleMapWrapperFragment.newInstance(location)).commit()
+//        parentFragmentManager.beginTransaction()
+//            .replace(R.id.map_fragment_view, GoogleMapWrapperFragment.newInstance(location)).commit()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
