@@ -3,7 +3,6 @@ package app.sram.bikestore.activity
 import android.Manifest
 import android.os.Bundle
 import android.view.View
-import app.sram.bikestore.BlankFragment
 import app.sram.bikestore.DeviceLocationFragment
 import app.sram.bikestore.R
 import app.sram.bikestore.data.HOME
