@@ -17,17 +17,15 @@ data class BikeStoreBean(
     val placeId: String
 )
 
-@Parcelize
 data class Geometry(
     val location: ScramLocation
-) : Parcelable
+)
 
-@Parcelize
 data class Photo(
     val photoReference: String,
     val width: Int,
     val height: Int
-) : Parcelable
+)
 
 @Parcelize
 data class ScramLocation(

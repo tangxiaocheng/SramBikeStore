@@ -39,7 +39,7 @@ class BikeStoreListUseCaseTest {
         val data: List<BikeStoreItem> = (test.values().first() as Success).data
         Truth.assertThat(data.size).isEqualTo(4)
         Truth.assertThat(data.first()).isInstanceOf(BikeStoreItem::class.java)
-        Truth.assertThat(data.first().bikeStoreEntity.name).isEqualTo("Nearest WheelLab")
+        Truth.assertThat(data.first().name).isEqualTo("Nearest WheelLab")
         Truth.assertThat(data.first().distance).isWithin(0.01f).of(2367.8901f)
     }
 

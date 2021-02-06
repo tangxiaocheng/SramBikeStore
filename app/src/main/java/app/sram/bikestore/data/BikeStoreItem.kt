@@ -5,7 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class BikeStoreItem(
-    val bikeStoreEntity: BikeStoreEntity,
-    val distance: Float
-
+    val distance: Float,
+    val formatDistance: String,
+    val photoUrl: String,
+    val name: String,
+    val rating: Float,
+    val userRatingsTotal: Int,
+    val vicinity: String,
+    val location:ScramLocation
 ) : Parcelable

@@ -11,7 +11,6 @@ import kotlinx.parcelize.Parcelize
 // Json object -> Room entity -> Adapter Item Model.
 // For offerLine use: select * from db.
 @Entity(tableName = DBConstant.TABLE_NAME)
-@Parcelize
 data class BikeStoreEntity(
     @PrimaryKey(autoGenerate = false)
     val placeId: String,
@@ -26,4 +25,4 @@ data class BikeStoreEntity(
     val location: ScramLocation,
     @Embedded
     val photo: Photo?
-) : Parcelable
+)
