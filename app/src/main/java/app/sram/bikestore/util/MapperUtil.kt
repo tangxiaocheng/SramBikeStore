@@ -3,9 +3,25 @@ package app.sram.bikestore.util
 import app.sram.bikestore.BuildConfig
 import app.sram.bikestore.data.*
 
-fun entityToItem(bikeStoreEntity: BikeStoreEntity, distance: Float): BikeStoreItem {
-    return BikeStoreItem(bikeStoreEntity, distance)
+/*
+* BikeStoreBean --> BikeStoreEntity --> BikeStoreItem
+*      Json     -->    Database Dao --> Adapter Item.
+* Keep the single responsibility principle for Object classes.
+* In this case:
+* 1, BikeStoreEntity should not mess with Parcelize. Exception for ScramLocation.
+* 2, Processing all the computing logic here instead of computing it in the Adapter class.
+* */
+fun entityToItem(entity: BikeStoreEntity, distance: Float): BikeStoreItem {
+    return BikeStoreItem(distance = distance,
+        formatDistance = formatDistance(distance),
+        photoUrl = entity.photo?.photoUrl() ?: PHOTO_HOLDER_URL,
+        name = entity.name,
+        rating = entity.rating,
+        userRatingsTotal = entity.userRatingsTotal,
+        vicinity = entity.vicinity,
+        location = entity.location)
 }
+
 /**
  * google will transform the assemble url with photo reference into an different url, which makes the image cache not applicable at the coil library.
  *

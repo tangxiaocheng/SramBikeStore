@@ -55,23 +55,18 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
         bikeStoreItem: BikeStoreItem,
         position: Int
     ) {
-        val store = bikeStoreItem.bikeStoreEntity
-        holder.storeDistTv.text = "${formatDistance(bikeStoreItem.distance)} :$position"
-        holder.stateNameTv.text = store.name
-        holder.ratingBar.rating = store.rating
-        holder.ratingTv.text = store.rating.toString()
-        holder.totalRatingTv.text = "(${store.userRatingsTotal})"
+        holder.storeDistTv.text = "${bikeStoreItem.formatDistance} :$position"
+        holder.stateNameTv.text = bikeStoreItem.name
+        holder.ratingBar.rating = bikeStoreItem.rating
+        holder.ratingTv.text = bikeStoreItem.rating.toString()
+        holder.totalRatingTv.text = "(${bikeStoreItem.userRatingsTotal})"
         holder.root.setOnClickListener {
             Intent(it.context, BikeStoreDetailActivity::class.java).run {
                 this.putExtra(BikeStoreDetailActivity.ARG_STORE_ITEM, bikeStoreItem)
                 it.context.startActivity(this)
             }
         }
-        if (store.photo != null) {
-            holder.storePhotoIv.load(store.photo.photoUrl())
-        } else {
-            holder.storePhotoIv.load(R.drawable.bike_store_photo_sample)
-        }
+        holder.storePhotoIv.load(bikeStoreItem.photoUrl)
     }
 
     inner class ViewHolder(binding: BikeStoreListItemBinding) :

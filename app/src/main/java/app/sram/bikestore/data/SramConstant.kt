@@ -11,3 +11,5 @@ const val API_CODE_UNKNOWN_ERROR = "UNKNOWN_ERROR"
 val HOME = ScramLocation(lat = 47.584166043000366, lng = -122.15145292817319)
 const val KEY_NAME = "key"
 const val ARG_LOCATION = "ScramLocation"
+const val PHOTO_HOLDER_URL =
+    "https://png.pngtree.com/png-clipart/20190520/original/pngtree-placeholder-vector-icon-png-image_3725418.jpg"
