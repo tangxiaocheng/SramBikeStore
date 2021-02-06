@@ -62,6 +62,26 @@ class BikeStoreListUseCaseTest {
         Truth.assertThat(errorModel.resultCode).isEqualTo(404)
     }
 
+    @Test
+    fun entityToModelTestFailOfWrongAPI_Status() {
+        // given
+        every { repoUs.list(TEST_PARAM) } returns Single.just(inputOfFailWrongApiStatusCode())
+        val useCase = BikeStoreListUseCase(repoUs, testScheduler, testScheduler)
+        val test: TestObserver<ResultModel<List<BikeStoreItem>>> = useCase.execute(TEST_PARAM).test()
+        test.assertNoErrors()
+        test.assertValueCount(0)
+
+        // when
+        testScheduler.triggerActions()
+
+        // then
+        test.assertValueCount(1)
+        Truth.assertThat(test.values().first()).isInstanceOf(Failure::class.java)
+        val errorModel = (test.values().first() as Failure).errorModel
+        Truth.assertThat(errorModel.resultCode).isEqualTo(200)
+        Truth.assertThat(errorModel.apiStatusCode).isEqualTo("REQUEST_DENIED")
+    }
+
     private fun input(): ResultModel<BikeStoreData> {
         return Success(
             BikeStoreData(
@@ -75,5 +95,9 @@ class BikeStoreListUseCaseTest {
 
     private fun inputOfFail(): ResultModel<BikeStoreData> {
         return Failure(ErrorModel("", "data not found", 404))
+    }
+
+    private fun inputOfFailWrongApiStatusCode(): ResultModel<BikeStoreData> {
+        return Failure(ErrorModel("REQUEST_DENIED", "The provided API key is invalid.", 200))
     }
 }
