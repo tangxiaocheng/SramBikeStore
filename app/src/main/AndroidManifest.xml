@@ -31,5 +31,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
     </application>
-
+    <!--Fix up for Share Intent in targets Android 11-->
+    <!--https://developer.android.com/training/basics/intents/package-visibility-use-cases#open-urls-custom-tabs-->
+    <queries>
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+    </queries>
 </manifest>
