@@ -79,7 +79,7 @@ class BikeStoreDetailActivity : AppCompatActivity() {
             putExtra(Intent.EXTRA_SUBJECT, title)
             putExtra(Intent.EXTRA_TEXT, subject)
         }
-        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+        if (packageManager != null && intent.resolveActivity(packageManager) != null) {//warning here
             startActivity(intent)
         }
     }
