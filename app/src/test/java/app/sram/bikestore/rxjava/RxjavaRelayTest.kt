@@ -1,14 +1,8 @@
 package app.sram.bikestore.rxjava
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.*
 import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.Single
-import io.reactivex.observables.GroupedObservable
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.ReplaySubject
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 
 
@@ -48,33 +42,37 @@ class RxjavaRelayTest {
 
 
     @Test
-    fun testTokenPage() {
+    fun testPageList_CollectAllTheList() {
 
-
+        val pageSubject: ReplaySubject<String> = ReplaySubject.create<String>(10)
+        pageSubject.onNext(START_TOKEN)
         val observable = Observable.defer {
-            val pageSubject = ReplaySubject.create<String>(10)
-
-            val nextPageSubject = pageSubject.concatMap { pageToken: String ->
-                if (pageToken == END_TOKEN) {
-                    return@concatMap Observable.empty<List<String>>().doOnComplete {
-                        pageSubject.onComplete()
-                    }
+            return@defer pageSubject.concatMap { pageToken ->
+                return@concatMap if (pageToken == END_TOKEN) {
+                    Observable.empty<Any>().doOnComplete { pageSubject.onComplete() }
                 } else {
-                    return@concatMap Observable.just(dataSource[pageToken])
-                        .doOnNext { pageSubject.onNext(it!!.pageToken) }
+                    Observable.just(dataSource[pageToken]!!)
+                        .doOnNext { pageSubject.onNext(it.pageToken) }
                 }
             }
-            pageSubject.onNext(START_TOKEN)
-            nextPageSubject
         }
-        val test = observable.test()
-        Truth.assertThat(test.valueCount()).isEqualTo(5)
-        Truth.assertThat(test.values()[0]).isEqualTo(dataSource[START_TOKEN])
-        Truth.assertThat(test.values()[1]).isEqualTo(dataSource[pageTokenA])
-        Truth.assertThat(test.values()[2]).isEqualTo(dataSource[pageTokenB])
-        Truth.assertThat(test.values()[3]).isEqualTo(dataSource[pageTokenC])
-        Truth.assertThat(test.values()[4]).isEqualTo(dataSource[pageTokenD])
 
+        val test = observable.test()
+        assertThat(test.valueCount()).isEqualTo(5)
+        assertThat(test.values()[0]).isEqualTo(dataSource[START_TOKEN])
+
+
+        val resultTest = observable
+            .cast(PageResult::class.java)
+            .map { it.pageList }
+            .flatMapIterable { it }
+            .test()
+
+
+        assertThat(resultTest.valueCount()).isEqualTo(3 * 5)
+        assertThat(resultTest.values()).isEqualTo(dataSource.values.flatMap { it.pageList })
+
+        resultTest.values().forEach { print("$it -> ") }
 
 
     }
