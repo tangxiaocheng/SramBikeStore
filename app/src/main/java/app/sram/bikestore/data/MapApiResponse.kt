@@ -6,5 +6,5 @@ data class MapApiResponse(
     val status: String,
     val results: List<BikeStoreBean>,
     val nextPageToken: String?,
-    val error_message: String?
+    val errorMessage: String?
 )

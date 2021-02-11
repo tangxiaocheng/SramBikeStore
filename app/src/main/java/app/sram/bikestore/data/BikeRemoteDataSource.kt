@@ -32,7 +32,7 @@ class BikeRemoteDataSource @Inject constructor(private val api: RestApi, private
                 pageTokenRepo.put(body.nextPageToken)
                 Success(BikeStoreData(body.results.map { modelToEntity(it) }))
             } else {
-                Failure(ErrorModel(body.status, body.error_message, HTTP_CODE_OK))
+                Failure(ErrorModel(body.status, body.errorMessage, HTTP_CODE_OK))
             }
         } else {
             Failure(ErrorModel(null, response.errorBody()?.string(), response.code()))
