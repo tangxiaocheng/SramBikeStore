@@ -7,14 +7,20 @@ import retrofit2.http.Query
 
 /**
  * List all the endpoint defined by server and wrap it as retrofit interface. It could be auto generated.
+ *
+ * For google map api here, if a request has more than one page, it will return a next_page_token in the json.
+ * For this paged api, we can just pass the [pagetoken] into to the query parameters.
  */
+
+const val PATH = "maps/api/place/nearbysearch/json"
+
 interface RestApi {
     /**
      * Be explicit of the error case and force the API consumers to handle such cases for better safety by return  a [Response] rather than the raw list.
      * The lower level of the code, the more explicit the code should be written.
      * So that the higher level, also known as consumer gets the chance how to handle it properly.
      */
-    @GET("maps/api/place/nearbysearch/json")
+    @GET(PATH)
     fun getBikeStoreListByLocation(
         @Query("location") location: String,
         @Query("radius") radius: String = "50000",
@@ -24,8 +30,25 @@ interface RestApi {
     /*
     * For a request with a pagetoken, map api doesn't need other parameters here.
     * */
-    @GET("maps/api/place/nearbysearch/json")
+    @GET(PATH)
     fun getBikeStoreListByPageToken(
         @Query("pagetoken") pageToken: String
     ): Single<Response<MapApiResponse>>
+
+    /*
+    * Since the page token is in the result of the previous request
+    * here I will use block-thread method. Initially, it starts in a Non-UI thread.
+    *
+    * */
+    @GET(PATH)
+    fun getBikeStoreListByLocationInThread(
+        @Query("location") location: String,
+        @Query("radius") radius: String = "50000",
+        @Query("type") type: String = "bicycle_store"
+    ): Response<MapApiResponse>
+
+    @GET(PATH)
+    fun getBikeStoreListByPageTokenInThread(
+        @Query("pagetoken") pageToken: String
+    ): Response<MapApiResponse>
 }
