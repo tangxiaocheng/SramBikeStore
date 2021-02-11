@@ -19,9 +19,9 @@ class BikeRemoteDataSource @Inject constructor(private val api: RestApi, private
     private fun fetchInternal(param: Param): Single<ResultModel<BikeStoreData>> {
         val pageToken = param.pageToken.value
         return if (pageToken == null) {
-            api.getBookStoreList(param.location.toQueryString()).map(this::mapToResultModel)
+            api.getBikeStoreListByLocation(param.location.toQueryString()).map(this::mapToResultModel)
         } else {
-            api.bikeStoreList(pageToken).map(this::mapToResultModel)
+            api.getBikeStoreListByPageToken(pageToken).map(this::mapToResultModel)
         }
     }
 
