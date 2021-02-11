@@ -15,7 +15,7 @@ interface RestApi {
      * So that the higher level, also known as consumer gets the chance how to handle it properly.
      */
     @GET("maps/api/place/nearbysearch/json")
-    fun getBookStoreList(
+    fun getBikeStoreListByLocation(
         @Query("location") location: String,
         @Query("radius") radius: String = "50000",
         @Query("type") type: String = "bicycle_store"
@@ -25,7 +25,7 @@ interface RestApi {
     * For a request with a pagetoken, map api doesn't need other parameters here.
     * */
     @GET("maps/api/place/nearbysearch/json")
-    fun bikeStoreList(
+    fun getBikeStoreListByPageToken(
         @Query("pagetoken") pageToken: String
     ): Single<Response<MapApiResponse>>
 }
