@@ -13,6 +13,9 @@ interface DataBaseDao {
     @Query("SELECT * FROM ${DBConstant.TABLE_NAME} ORDER BY placeId ASC")
     fun getBikeStoreListSingle(): Single<List<BikeStoreEntity>>
 
+    @Query("SELECT * FROM ${DBConstant.TABLE_NAME} ORDER BY placeId ASC")
+    fun getAllPages(): List<BikeStoreEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertBikeStore(bikeStoreEntity: BikeStoreEntity)
 

@@ -22,4 +22,8 @@ class BikeDatabaseSource @Inject constructor(
         val list = dao.insertAllBikeStore(it)
         Timber.i("Inputted ${it.size}, Inserted ${list.size}")
     }
+
+    fun listAllPages(): ResultModel<BikeStoreData> {
+        return Success(BikeStoreData(dao.getAllPages()))
+    }
 }

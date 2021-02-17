@@ -1,11 +1,9 @@
 package app.sram.bikestore.data
 
-import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import app.sram.bikestore.di.room.DBConstant
-import kotlinx.parcelize.Parcelize
 
 // For persisting the data, I'm considering to flatten and filter out all the unwanted info from the original json object.
 // Json object -> Room entity -> Adapter Item Model.
