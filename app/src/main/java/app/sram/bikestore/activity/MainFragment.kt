@@ -15,7 +15,6 @@ import com.uber.autodispose.ScopeProvider
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import dagger.Provides
 import dagger.android.support.DaggerFragment
-import io.reactivex.Observable
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,9 +38,6 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     lateinit var adapter: BikeStoreListAdapter
 
     @Inject
-    lateinit var endlessRecyclerOnScrollListener: EndlessRecyclerOnScrollListener
-
-    @Inject
     lateinit var linearLayoutManager: LinearLayoutManager
 
     private lateinit var binding: FragmentMainBinding
@@ -62,7 +58,6 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     }
 
     private fun initView() {
-        binding.recyclerView.addOnScrollListener(endlessRecyclerOnScrollListener)
         binding.recyclerView.layoutManager = linearLayoutManager
         binding.recyclerView.adapter = adapter
         binding.refreshSrl.setColorSchemeResources(R.color.colorAccent)
@@ -97,16 +92,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     }
 
     private fun bindList(list: List<BikeStoreItem>) {
-        if (list.isEmpty()) {
-            onNoMoreData()
-        } else {
-            adapter.append(list)
-        }
-    }
-
-    private fun onNoMoreData() {
-        endlessRecyclerOnScrollListener.markCompleted()
-        showSnackBar(getString(R.string.no_more_data))
+        adapter.append(list)
     }
 
     private fun updateView() {
@@ -137,10 +123,6 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
         val errorMessage = "${errorModel.apiStatusCode} : ${errorModel.message}"
         showErrorMessage(errorMessage)
         showSnackBar(errorMessage)
-    }
-
-    override fun loadingMoreSignal(): Observable<Unit> {
-        return endlessRecyclerOnScrollListener.loadingMoreSignal()
     }
 
     override fun onNetworkError(throwable: Throwable) {
