@@ -41,14 +41,14 @@ interface RestApi {
     *
     * */
     @GET(PATH)
-    fun getBikeStoreListByLocationInThread(
+    fun getPageListByLocation(
         @Query("location") location: String,
         @Query("radius") radius: String = "50000",
         @Query("type") type: String = "bicycle_store"
-    ): Response<MapApiResponse>
+    ): MapApiResponse
 
     @GET(PATH)
-    fun getBikeStoreListByPageTokenInThread(
+    fun getPageListByPageToken(
         @Query("pagetoken") pageToken: String
-    ): Response<MapApiResponse>
+    ): MapApiResponse
 }

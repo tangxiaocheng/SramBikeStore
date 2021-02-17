@@ -33,7 +33,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     private var location: ScramLocation = HOME
 
     @Inject
-    lateinit var fragmentPresenter: MainFragmentPresenter
+    lateinit var fragmentPresenter: AllPagesPresenter
 
     @Inject
     lateinit var adapter: BikeStoreListAdapter
@@ -88,7 +88,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
      * In this case, the network will be automatically cancelled upon onPause.
      */
     private fun loadData(location: ScramLocation) {
-        fragmentPresenter.loadData(location)
+        fragmentPresenter.loadData(Chicago)
     }
 
     override fun onResultReady(list: List<BikeStoreItem>) {

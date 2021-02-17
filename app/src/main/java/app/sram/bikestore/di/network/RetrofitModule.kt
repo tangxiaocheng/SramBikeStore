@@ -22,11 +22,14 @@ class RetrofitModule {
         serverUrl: HttpUrl,
         okHttpClient: OkHttpClient,
         rxJava2CallAdapterFactory: RxJava2CallAdapterFactory,
-        gsonConverterFactory: GsonConverterFactory
+        gsonConverterFactory: GsonConverterFactory,
+        mySyncCallAdapterFactory: MySyncCallAdapterFactory
     ): Retrofit {
+
         return Retrofit.Builder().baseUrl(serverUrl)
             .client(okHttpClient)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
+            .addCallAdapterFactory(mySyncCallAdapterFactory)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }
