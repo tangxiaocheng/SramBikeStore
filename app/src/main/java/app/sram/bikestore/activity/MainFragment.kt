@@ -84,7 +84,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
      * In this case, the network will be automatically cancelled upon onPause.
      */
     private fun loadData(location: ScramLocation, refresh: Boolean) {
-        fragmentPresenter.loadData(Chicago, refresh)
+        fragmentPresenter.loadData(location, refresh)
     }
 
     override fun onResultReady(list: List<BikeStoreItem>) {
