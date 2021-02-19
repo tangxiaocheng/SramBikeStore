@@ -2,7 +2,7 @@ package app.sram.bikestore.activity
 
 import app.sram.bikestore.util.calculate
 import app.sram.bikestore.data.*
-import app.sram.bikestore.util.entityToItem
+import app.sram.bikestore.data.mapper.EntityToItemMapper
 import app.sram.bikestore.di.thread.IOScheduler
 import app.sram.bikestore.di.thread.UIScheduler
 import io.reactivex.Scheduler
@@ -16,20 +16,20 @@ import javax.inject.Inject
 class BikeStoreListUseCase @Inject constructor(
     private val bikeRepo: BikeRepo,
     @IOScheduler private val ioScheduler: Scheduler,
-    @UIScheduler private val mainScheduler: Scheduler
+    @UIScheduler private val mainScheduler: Scheduler,
+    private val entityToItemMapper: EntityToItemMapper
 ) {
-    fun execute(param: Param): Single<ResultModel<List<BikeStoreItem>>> {
-        return bikeRepo.list(param).map { mapToAdapterModel(it, param.location) }.subscribeOn(ioScheduler)
-            .observeOn(mainScheduler)
+    fun execute(location: ScramLocation, refresh: Boolean): Single<ResultModel<List<BikeStoreItem>>> {
+        return Single.fromCallable { bikeRepo.fetAllPages(location, refresh) }.subscribeOn(ioScheduler)
+            .map { mapToAdapterModel(it, location) }.observeOn(mainScheduler)
     }
 
     private fun mapToAdapterModel(resultModel: ResultModel<BikeStoreData>, deviceLocation: ScramLocation):
         ResultModel<List<BikeStoreItem>> {
-
             return when (resultModel) {
                 is Success -> Success(
                     resultModel.data.list.map {
-                        entityToItem(it, deviceLocation.calculate(it.location))
+                        entityToItemMapper.mapToItem(it, deviceLocation.calculate(it.location))
                     }.sortedBy { it.distance }
                 )
                 is Failure -> Failure(resultModel.errorModel)

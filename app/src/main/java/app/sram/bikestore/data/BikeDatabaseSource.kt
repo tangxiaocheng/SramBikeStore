@@ -1,7 +1,6 @@
 package app.sram.bikestore.data
 
 import app.sram.bikestore.di.room.DataBaseDao
-import io.reactivex.Maybe
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -12,18 +11,17 @@ class BikeDatabaseSource @Inject constructor(
     private val dao: DataBaseDao
 ) {
 
-    fun list(): Maybe<ResultModel<BikeStoreData>> {
-        return dao.getBikeStoreListSingle()
-            .filter { it.isNotEmpty() }
-            .map { Success(BikeStoreData(it)) }
-    }
-
     fun insertAll(it: List<BikeStoreEntity>) {
         val list = dao.insertAllBikeStore(it)
         Timber.i("Inputted ${it.size}, Inserted ${list.size}")
     }
 
     fun listAllPages(): ResultModel<BikeStoreData> {
-        return Success(BikeStoreData(dao.getAllPages()))
+        val allPages = dao.getAllPages()
+        return if (allPages.isNotEmpty()) {
+            Success(BikeStoreData(allPages))
+        } else {
+            Failure(ErrorModel("", "local database is empty", 1000))
+        }
     }
 }

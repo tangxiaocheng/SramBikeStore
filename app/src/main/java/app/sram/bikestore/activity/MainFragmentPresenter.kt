@@ -11,13 +11,13 @@ import javax.inject.Inject
 *
 * */
 @FragmentScope
-class AllPagesPresenter @Inject constructor(
-    private val useCase: AllPagesUseCase,
+class MainFragmentPresenter @Inject constructor(
+    private val useCase: BikeStoreListUseCase,
     private val scopeProvider: ScopeProvider,
     private val mainFragmentCallback: MainFragmentCallback
 ) {
-    fun loadData(location: ScramLocation) {
-        useCase.execute(location)
+    fun loadData(location: ScramLocation, refresh: Boolean) {
+        useCase.execute(location, refresh)
             .`as`(autoDisposable(scopeProvider))
             .subscribe(
                 { onResultModelReady(it) },

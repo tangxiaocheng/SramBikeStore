@@ -1,41 +1,45 @@
 package app.sram.bikestore.data
 
-import app.sram.bikestore.util.modelToEntity
-import io.reactivex.Single
-import retrofit2.Response
+import app.sram.bikestore.data.mapper.JsonToEntityMapper
 import javax.inject.Inject
 
-/**
- * This repository provides a single source of truth for the raw data list. It does not handles any
- * filter logic. It does not address any specific business logic.
- * The remote source only fetch the data from network. It maps the raw http data to [ResultModel]. It does not handle the cache, etc.
- */
-class BikeRemoteDataSource @Inject constructor(private val api: RestApi, private val pageTokenRepo: PageTokenRepo) {
+const val START_TOKEN = ""
+const val END_TOKEN = "null"
 
-    fun fetch(location: Param): Single<ResultModel<BikeStoreData>> {
-        return fetchInternal(location)
-    }
+class BikeRemoteDataSource @Inject constructor(
+    private val api: RestApi,
+    private val jsonToEntityMapper: JsonToEntityMapper
+) {
 
-    private fun fetchInternal(param: Param): Single<ResultModel<BikeStoreData>> {
-        val pageToken = param.pageToken.value
-        return if (pageToken == null) {
-            api.getBikeStoreListByLocation(param.location.toQueryString()).map(this::mapToResultModel)
-        } else {
-            api.getBikeStoreListByPageToken(pageToken).map(this::mapToResultModel)
-        }
-    }
+    fun fetAllPages(location: ScramLocation): ResultModel<BikeStoreData> {
 
-    private fun mapToResultModel(response: Response<MapApiResponse>): ResultModel<BikeStoreData> {
-        return if (response.isSuccessful && response.body() != null) {
-            val body: MapApiResponse = response.body()!!
-            if (body.status == API_CODE_OK) {
-                pageTokenRepo.put(body.nextPageToken)
-                Success(BikeStoreData(body.results.map { modelToEntity(it) }))
+        val bikeList = ArrayList<BikeStoreBean>(20)
+        var curToken = START_TOKEN
+        var errorModel: ErrorModel? = null
+        while (curToken != END_TOKEN) {
+            val response: MapApiResponse = if (curToken == START_TOKEN) {
+                api.getPageListByLocation(location.toQueryString())
             } else {
-                Failure(ErrorModel(body.status, body.errorMessage, HTTP_CODE_OK))
+                api.getPageListByPageToken(curToken)
             }
+            val (status: String, results: List<BikeStoreBean>, nextPageToken: String?, errorMessage: String?) = response
+            if (status == API_CODE_OK) {
+                bikeList.addAll(results)
+            } else {
+                errorModel = ErrorModel(status, errorMessage, 200)
+                break
+            }
+            curToken = nextPageToken ?: END_TOKEN
+            if (curToken != END_TOKEN) {
+                // Interesting google map paging api:when you get a valid pageToken, you have to wait for a while to get the page, otherwise, it will return error.
+                Thread.sleep(2000)
+            }
+        }
+
+        return if (bikeList.isNotEmpty()) {
+            Success(BikeStoreData(bikeList.map(jsonToEntityMapper::mapToEntity)))
         } else {
-            Failure(ErrorModel(null, response.errorBody()?.string(), response.code()))
+            Failure(errorModel!!)
         }
     }
 }
