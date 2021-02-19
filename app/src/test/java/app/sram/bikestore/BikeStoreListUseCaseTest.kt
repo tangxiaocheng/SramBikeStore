@@ -1,18 +1,19 @@
 package app.sram.bikestore
 
+import app.sram.bikestore.activity.BikeStoreListUseCase
 import app.sram.bikestore.data.*
+import app.sram.bikestore.data.mapper.EntityToItemMapper
 import app.sram.bikestore.util.modelToEntity
 import com.google.common.truth.Truth
 import io.mockk.every
 import io.mockk.mockk
-import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
-val TEST_PARAM = Param(ScramLocation(47.584166043000366, -122.15145292817319))
+val TEST_PARAM = ScramLocation(47.584166043000366, -122.15145292817319)
 
 @RunWith(RobolectricTestRunner::class)
 class BikeStoreListUseCaseTest {
@@ -23,9 +24,9 @@ class BikeStoreListUseCaseTest {
     @Test
     fun entityToModelTest() {
         // given
-        every { repoUs.list(TEST_PARAM) } returns Single.just(input())
-        val useCase = BikeStoreListUseCase(repoUs, testScheduler, testScheduler)
-        val test: TestObserver<ResultModel<List<BikeStoreItem>>> = useCase.execute(TEST_PARAM).test()
+        every { repoUs.list(TEST_PARAM, false) } returns input()
+        val useCase = BikeStoreListUseCase(repoUs, testScheduler, testScheduler, EntityToItemMapper())
+        val test: TestObserver<ResultModel<List<BikeStoreItem>>> = useCase.execute(TEST_PARAM, false).test()
         test.assertNoErrors()
         test.assertValueCount(0)
 
@@ -45,9 +46,9 @@ class BikeStoreListUseCaseTest {
     @Test
     fun entityToModelTestFail() {
         // given
-        every { repoUs.list(TEST_PARAM) } returns Single.just(inputOfFail())
-        val useCase = BikeStoreListUseCase(repoUs, testScheduler, testScheduler)
-        val test: TestObserver<ResultModel<List<BikeStoreItem>>> = useCase.execute(TEST_PARAM).test()
+        every { repoUs.list(TEST_PARAM, false) } returns inputOfFail()
+        val useCase = BikeStoreListUseCase(repoUs, testScheduler, testScheduler, EntityToItemMapper())
+        val test: TestObserver<ResultModel<List<BikeStoreItem>>> = useCase.execute(TEST_PARAM, false).test()
         test.assertNoErrors()
         test.assertValueCount(0)
 
@@ -64,9 +65,9 @@ class BikeStoreListUseCaseTest {
     @Test
     fun entityToModelTestFailOfWrongAPI_Status() {
         // given
-        every { repoUs.list(TEST_PARAM) } returns Single.just(inputOfFailWrongApiStatusCode())
-        val useCase = BikeStoreListUseCase(repoUs, testScheduler, testScheduler)
-        val test: TestObserver<ResultModel<List<BikeStoreItem>>> = useCase.execute(TEST_PARAM).test()
+        every { repoUs.list(TEST_PARAM, false) } returns inputOfFailWrongApiStatusCode()
+        val useCase = BikeStoreListUseCase(repoUs, testScheduler, testScheduler, EntityToItemMapper())
+        val test: TestObserver<ResultModel<List<BikeStoreItem>>> = useCase.execute(TEST_PARAM, false).test()
         test.assertNoErrors()
         test.assertValueCount(0)
 
