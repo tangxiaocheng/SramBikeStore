@@ -32,7 +32,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     private var location: ScramLocation = HOME
 
     @Inject
-    lateinit var fragmentPresenter: AllPagesPresenter
+    lateinit var fragmentPresenter: MainFragmentPresenter
 
     @Inject
     lateinit var adapter: BikeStoreListAdapter
@@ -63,7 +63,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
         binding.refreshSrl.setColorSchemeResources(R.color.colorAccent)
         binding.refreshSrl.setOnRefreshListener {
             adapter.fresh()
-            loadData(location)
+            loadData(location, true)
         }
 
         childFragmentManager.beginTransaction()
@@ -73,8 +73,9 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        loadData(location)
+        loadData(location, false)
     }
+
     /**
      * Using [com.uber.autodispose.AutoDispose] to provide the scope of binding result from server.
      * Currently, the life cycle scope is from onCreate to onDestroy.
@@ -82,8 +83,8 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
      * If we want to refresh the data every time when the app is brought to foreground, we could simply put this method onResume.
      * In this case, the network will be automatically cancelled upon onPause.
      */
-    private fun loadData(location: ScramLocation) {
-        fragmentPresenter.loadData(Chicago)
+    private fun loadData(location: ScramLocation, refresh: Boolean) {
+        fragmentPresenter.loadData(Chicago, refresh)
     }
 
     override fun onResultReady(list: List<BikeStoreItem>) {
@@ -139,7 +140,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
 
     private fun showSnackBar(message: String) {
         Snackbar.make(binding.tipTv, message, Snackbar.LENGTH_LONG)
-            .setAction("RETRY") { loadData(location) }.show()
+            .setAction("RETRY") { loadData(location, false) }.show()
     }
 
     @dagger.Module

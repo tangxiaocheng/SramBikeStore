@@ -1,7 +1,6 @@
 package app.sram.bikestore
 
 import app.sram.bikestore.data.*
-import app.sram.bikestore.activity.BikeStoreListUseCase
 import app.sram.bikestore.util.modelToEntity
 import com.google.common.truth.Truth
 import io.mockk.every
