@@ -10,5 +10,5 @@ abstract class RepoModule {
 
     @Binds
     @AppScope
-    abstract fun bindBikeRepo(impl: BikeRepoImp): BikeRepo
+    abstract fun bindBikeRepo(impl: BikeRepoImpl): BikeRepo
 }

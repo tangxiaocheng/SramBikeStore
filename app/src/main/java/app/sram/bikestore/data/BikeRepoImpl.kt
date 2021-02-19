@@ -2,7 +2,7 @@ package app.sram.bikestore.data
 
 import javax.inject.Inject
 
-class BikeRepoImp @Inject constructor(
+class BikeRepoImpl @Inject constructor(
     private val remoteDataSource: BikeRemoteDataSource,
     private val localDataSource: BikeDatabaseSource
 ) : BikeRepo {
