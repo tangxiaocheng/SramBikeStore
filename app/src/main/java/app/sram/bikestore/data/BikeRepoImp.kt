@@ -11,7 +11,7 @@ class BikeRepoImp @Inject constructor(
         return localDataSource.listAllPages()
     }
 
-    override fun fetAllPages(location: ScramLocation, refresh: Boolean): ResultModel<BikeStoreData> {
+    override fun list(location: ScramLocation, refresh: Boolean): ResultModel<BikeStoreData> {
         return if (refresh) {
             // May be we can add the logic to clear local database first when the user is refreshing.
             fetchFromRemote(location)
@@ -26,7 +26,7 @@ class BikeRepoImp @Inject constructor(
     }
 
     private fun fetchFromRemote(location: ScramLocation): ResultModel<BikeStoreData> {
-        val remoteData = remoteDataSource.fetAllPages(location)
+        val remoteData = remoteDataSource.fetch(location)
         saveToLocalDatabase(remoteData) // side effect that save data to local database.
         return remoteData
     }

@@ -2,6 +2,7 @@ package app.sram.bikestore
 
 import app.sram.bikestore.data.RestApi
 import app.sram.bikestore.di.network.AuthInterceptor
+import app.sram.bikestore.di.network.MySyncCallAdapterFactory
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.HttpUrl
@@ -17,6 +18,8 @@ object RestApiHelper {
             .client(okHttpClient())
             .addConverterFactory(gsonConverterFactory)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
+            .addCallAdapterFactory(MySyncCallAdapterFactory())
+
             .baseUrl(url)
             .build()
     }

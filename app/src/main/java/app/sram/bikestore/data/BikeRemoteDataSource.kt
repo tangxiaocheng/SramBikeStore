@@ -11,7 +11,7 @@ class BikeRemoteDataSource @Inject constructor(
     private val jsonToEntityMapper: JsonToEntityMapper
 ) {
 
-    fun fetAllPages(location: ScramLocation): ResultModel<BikeStoreData> {
+    fun fetch(location: ScramLocation): ResultModel<BikeStoreData> {
 
         val bikeList = ArrayList<BikeStoreBean>(20)
         var curToken = START_TOKEN

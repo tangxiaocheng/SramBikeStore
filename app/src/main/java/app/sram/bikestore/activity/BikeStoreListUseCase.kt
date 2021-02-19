@@ -20,7 +20,7 @@ class BikeStoreListUseCase @Inject constructor(
     private val entityToItemMapper: EntityToItemMapper
 ) {
     fun execute(location: ScramLocation, refresh: Boolean): Single<ResultModel<List<BikeStoreItem>>> {
-        return Single.fromCallable { bikeRepo.fetAllPages(location, refresh) }.subscribeOn(ioScheduler)
+        return Single.fromCallable { bikeRepo.list(location, refresh) }.subscribeOn(ioScheduler)
             .map { mapToAdapterModel(it, location) }.observeOn(mainScheduler)
     }
 

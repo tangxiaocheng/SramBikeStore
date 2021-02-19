@@ -35,7 +35,7 @@ class RestApiTest {
 
         // when
         mockWebServer.enqueue(MockResponse().setResponseCode(200).setBody(mockBody))
-        val testObserver = imp.getBikeStoreListByLocation(TEST_PARAM.location.toQueryString()).test()
+        val testObserver = imp.getBikeStoreListByLocation(TEST_PARAM.toQueryString()).test()
         val request = mockWebServer.takeRequest()
 
         // then
