@@ -48,9 +48,9 @@ class DeviceLocationFragment : DaggerFragment() {
 
     private fun updateLocation(location: Location?) {
         if (location == null) {
-            if(this::callback.isInitialized){
+            if (this::callback.isInitialized) {
                 callback.onLocationReady(HOME)
-            }else{
+            } else {
                 throw RuntimeException("callback has not been set")
             }
         } else {

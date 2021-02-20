@@ -12,5 +12,5 @@ data class BikeStoreItem(
     val rating: Float,
     val userRatingsTotal: Int,
     val vicinity: String,
-    val location:ScramLocation
+    val location: ScramLocation
 ) : Parcelable

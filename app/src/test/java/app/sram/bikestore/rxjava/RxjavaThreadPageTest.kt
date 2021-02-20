@@ -1,15 +1,9 @@
 package app.sram.bikestore.rxjava
 
-import com.google.common.truth.Truth
-import io.reactivex.Observable
 import io.reactivex.Scheduler
-import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.ReplaySubject
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
-
 
 /**
  * A pure RxJava prototype that is aim to mock the process of fetching all the pages of the Google map place API result.
@@ -29,18 +23,14 @@ class RxjavaThreadPageTest {
     *
     * */
 
-
-
     private lateinit var io: Scheduler
     private lateinit var ui: Scheduler
-
 
     @Before
     fun setUp() {
         io = Schedulers.io()
         ui = Schedulers.trampoline()
     }
-
 
     @After
     fun tearDown() {

@@ -24,7 +24,7 @@ class MainActivity : DaggerAppCompatActivity(), DeviceLocationFragment.Callback 
     lateinit var networkStatusHelper: NetworkStatusHelper
 
     lateinit var binding: ActivityMainBinding
-    lateinit var view:View
+    lateinit var view: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,11 +78,11 @@ class MainActivity : DaggerAppCompatActivity(), DeviceLocationFragment.Callback 
         bindMainFragment(HOME)
     }
 
-    private fun showSnackBar( message: String) {
+    private fun showSnackBar(message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun onNetworkStatusUpdated( isConnectedToInternet: Boolean) {
+    private fun onNetworkStatusUpdated(isConnectedToInternet: Boolean) {
         if (!isConnectedToInternet) {
             showSnackBar(resources.getString(R.string.network_disconnected))
         }
