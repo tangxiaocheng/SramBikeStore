@@ -1,20 +1,15 @@
 package app.sram.bikestore.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import app.sram.bikestore.BikeStoreDetailActivity
-import app.sram.bikestore.R
 import app.sram.bikestore.data.BikeStoreItem
 import app.sram.bikestore.databinding.BikeStoreListItemBinding
 import app.sram.bikestore.di.ui.FragmentScope
-import app.sram.bikestore.util.formatDistance
-import app.sram.bikestore.util.photoUrl
 import coil.load
 import javax.inject.Inject
 @FragmentScope
@@ -61,10 +56,8 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
         holder.ratingTv.text = bikeStoreItem.rating.toString()
         holder.totalRatingTv.text = "(${bikeStoreItem.userRatingsTotal})"
         holder.root.setOnClickListener {
-            Intent(it.context, BikeStoreDetailActivity::class.java).run {
-                this.putExtra(BikeStoreDetailActivity.ARG_STORE_ITEM, bikeStoreItem)
-                it.context.startActivity(this)
-            }
+            TODO("revoke the onClick event in the main fragment")
+//            BikeStoreDetailFragment.newInstance(bikeStoreItem)
         }
         holder.storePhotoIv.load(bikeStoreItem.photoUrl)
     }
