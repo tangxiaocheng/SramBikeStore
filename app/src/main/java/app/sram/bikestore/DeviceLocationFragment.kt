@@ -6,15 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import app.sram.bikestore.data.HOME
-import app.sram.bikestore.data.ScramLocation
 import app.sram.bikestore.di.ui.FragmentScope
-import app.sram.bikestore.util.toScramLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Provides
 import dagger.android.support.DaggerFragment
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 /*
@@ -26,10 +25,11 @@ class DeviceLocationFragment : DaggerFragment() {
 
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var callback: Callback
 
     companion object {
         fun newInstance() = DeviceLocationFragment()
+        const val REQUEST_KEY_LOCATION = "REQUEST_KEY_LOCATION"
+        const val LOCATION_BUNDLE_KEY = "LOCATION_BUNDLE_KEY"
     }
 
     override fun onCreateView(
@@ -47,23 +47,7 @@ class DeviceLocationFragment : DaggerFragment() {
     }
 
     private fun updateLocation(location: Location?) {
-        if (location == null) {
-            if (this::callback.isInitialized) {
-                callback.onLocationReady(HOME)
-            } else {
-                throw RuntimeException("callback has not been set")
-            }
-        } else {
-            callback.onLocationReady(location.toScramLocation())
-        }
-    }
-
-    fun setCallback(callback: Callback) {
-        this.callback = callback
-    }
-
-    interface Callback {
-        fun onLocationReady(location: ScramLocation)
+        setFragmentResult(REQUEST_KEY_LOCATION, bundleOf(LOCATION_BUNDLE_KEY to (location ?: HOME)))
     }
 
     @dagger.Module
