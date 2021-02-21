@@ -1,9 +1,9 @@
 package app.sram.bikestore.util
 
 import android.location.Location
-import app.sram.bikestore.data.ScramLocation
+import app.sram.bikestore.data.SramLocation
 
-fun ScramLocation.calculate(location: ScramLocation): Float {
+fun SramLocation.calculate(location: SramLocation): Float {
     val resultHolder = FloatArray(1) { 0f }
     Location.distanceBetween(
         lat,
@@ -22,6 +22,6 @@ fun formatDistance(floatValue: Float): String {
 
 fun Float.format(digits: Int) = "%.${digits}f".format(this)
 
-fun Location.toScramLocation(): ScramLocation {
-    return ScramLocation(lat = this.latitude, lng = this.longitude)
+fun Location.toScramLocation(): SramLocation {
+    return SramLocation(lat = this.latitude, lng = this.longitude)
 }

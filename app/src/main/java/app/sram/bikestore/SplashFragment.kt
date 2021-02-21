@@ -10,7 +10,7 @@ import androidx.fragment.app.setFragmentResultListener
 import app.sram.bikestore.DeviceLocationFragment.Companion.REQUEST_KEY_LOCATION
 import app.sram.bikestore.activity.MainFragment
 import app.sram.bikestore.data.HOME
-import app.sram.bikestore.data.ScramLocation
+import app.sram.bikestore.data.SramLocation
 import app.sram.bikestore.databinding.FragmentSplashBinding
 import com.google.android.material.snackbar.Snackbar
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -46,7 +46,7 @@ class SplashFragment : Fragment() {
 
     private fun bindDeviceLocationFragment() {
         setFragmentResultListener(REQUEST_KEY_LOCATION) { _: String, bundle ->
-            val location = bundle.getParcelable<ScramLocation>(DeviceLocationFragment.LOCATION_BUNDLE_KEY)!!
+            val location = bundle.getParcelable<SramLocation>(DeviceLocationFragment.LOCATION_BUNDLE_KEY)!!
             bindMainFragment(location)
         }
 
@@ -78,9 +78,9 @@ class SplashFragment : Fragment() {
         Snackbar.make(viewForSnackBar, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun bindMainFragment(scramLocation: ScramLocation) {
+    private fun bindMainFragment(sramLocation: SramLocation) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MainFragment.newInstance(scramLocation))
+            .replace(R.id.container, MainFragment.newInstance(sramLocation))
             .commit()
     }
 }

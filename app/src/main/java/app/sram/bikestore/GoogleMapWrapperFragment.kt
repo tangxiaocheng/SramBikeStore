@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import app.sram.bikestore.data.ARG_LOCATION
 import app.sram.bikestore.data.HOME
-import app.sram.bikestore.data.ScramLocation
+import app.sram.bikestore.data.SramLocation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,12 +15,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 /**
  * Wrap up map fragment:[SupportMapFragment].
  * Used in two place: [app.sram.bikestore.main.MainFragment] and [BikeStoreDetailActivity]
- * Only receive [ScramLocation] as parameter.
+ * Only receive [SramLocation] as parameter.
  */
 class GoogleMapWrapperFragment : SupportMapFragment(), OnMapReadyCallback {
 
     companion object {
-        fun newInstance(location: ScramLocation) =
+        fun newInstance(location: SramLocation) =
             GoogleMapWrapperFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(ARG_LOCATION, location)

@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MainFragment : DaggerFragment(), MainFragmentCallback {
 
     companion object {
-        fun newInstance(location: ScramLocation) =
+        fun newInstance(location: SramLocation) =
             MainFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(ARG_LOCATION, location)
@@ -29,7 +29,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
             }
     }
 
-    private var location: ScramLocation = HOME
+    private var location: SramLocation = HOME
 
     @Inject
     lateinit var fragmentPresenter: MainFragmentPresenter
@@ -83,7 +83,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
      * If we want to refresh the data every time when the app is brought to foreground, we could simply put this method onResume.
      * In this case, the network will be automatically cancelled upon onPause.
      */
-    private fun loadData(location: ScramLocation, refresh: Boolean) {
+    private fun loadData(location: SramLocation, refresh: Boolean) {
         fragmentPresenter.loadData(location, refresh)
     }
 

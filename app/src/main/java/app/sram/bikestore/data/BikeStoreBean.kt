@@ -18,7 +18,7 @@ data class BikeStoreBean(
 )
 
 data class Geometry(
-    val location: ScramLocation
+    val location: SramLocation
 )
 
 data class Photo(
@@ -28,7 +28,7 @@ data class Photo(
 )
 
 @Parcelize
-data class ScramLocation(
+data class SramLocation(
     val lat: Double,
     val lng: Double
 ) : Parcelable {
@@ -42,6 +42,6 @@ data class Token(
 )
 
 data class Param(
-    val location: ScramLocation,
+    val location: SramLocation,
     val pageToken: Token = Token()
 )
