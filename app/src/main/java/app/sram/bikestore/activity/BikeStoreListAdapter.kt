@@ -11,9 +11,10 @@ import app.sram.bikestore.data.BikeStoreItem
 import app.sram.bikestore.databinding.BikeStoreListItemBinding
 import app.sram.bikestore.di.ui.FragmentScope
 import coil.load
-import javax.inject.Inject
+
 @FragmentScope
-class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStoreListAdapter.ViewHolder>() {
+class BikeStoreListAdapter constructor(private val onItemClicked: (BikeStoreItem) -> Unit) :
+    RecyclerView.Adapter<BikeStoreListAdapter.ViewHolder>() {
 
     private val stateList: MutableList<BikeStoreItem> = ArrayList()
 
@@ -24,7 +25,9 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
                 parent,
                 false
             )
-        )
+        ) {
+            onItemClicked(stateList[it])
+        }
     }
 
     fun fresh() {
@@ -55,14 +58,10 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
         holder.ratingBar.rating = bikeStoreItem.rating
         holder.ratingTv.text = bikeStoreItem.rating.toString()
         holder.totalRatingTv.text = "(${bikeStoreItem.userRatingsTotal})"
-        holder.root.setOnClickListener {
-            TODO("revoke the onClick event in the main fragment")
-//            BikeStoreDetailFragment.newInstance(bikeStoreItem)
-        }
         holder.storePhotoIv.load(bikeStoreItem.photoUrl)
     }
 
-    inner class ViewHolder(binding: BikeStoreListItemBinding) :
+    inner class ViewHolder(binding: BikeStoreListItemBinding, onItemClick: (position: Int) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         val stateNameTv: TextView = binding.storeNameTv
         val ratingBar: RatingBar = binding.storeRb
@@ -70,6 +69,9 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
         val ratingTv: TextView = binding.ratingTv
         val storeDistTv: TextView = binding.storeDistTv
         val totalRatingTv: TextView = binding.totalRatingTv
-        val root = binding.root
+        private val root = binding.root
+        init {
+            root.setOnClickListener { onItemClick(adapterPosition) }
+        }
     }
 }

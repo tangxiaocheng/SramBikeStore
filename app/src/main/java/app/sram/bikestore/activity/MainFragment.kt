@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import app.sram.bikestore.BikeStoreDetailFragment
 import app.sram.bikestore.GoogleMapWrapperFragment
 import app.sram.bikestore.R
 import app.sram.bikestore.data.*
@@ -34,7 +35,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     @Inject
     lateinit var fragmentPresenter: MainFragmentPresenter
 
-    @Inject
+//    @Inject
     lateinit var adapter: BikeStoreListAdapter
 
     @Inject
@@ -58,6 +59,11 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     }
 
     private fun initView() {
+        adapter = BikeStoreListAdapter {
+
+            childFragmentManager.beginTransaction()
+                .replace(R.id.map_fragment_view, BikeStoreDetailFragment.newInstance(it)).commit()
+        }
         binding.recyclerView.layoutManager = linearLayoutManager
         binding.recyclerView.adapter = adapter
         binding.refreshSrl.setColorSchemeResources(R.color.colorAccent)
