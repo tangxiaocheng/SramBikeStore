@@ -127,7 +127,7 @@ dependencies {
     //A library for easy permission management.
     implementation 'com.github.tbruyelle:rxpermissions:0.11'
 
-    testImplementation 'commons-io:commons-io:2.8.0'
+    testImplementation 'commons-io:commons-io:20030203.000550'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
