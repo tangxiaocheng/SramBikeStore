@@ -37,7 +37,7 @@ class BikeRemoteDataSourceTest {
         assertThat(resultModel).isInstanceOf(Success::class.java)
         assertThat(resultModel).isEqualTo(successExpected())
 
-        assertThat((resultModel as Success).data.list[0].location).isEqualTo(ScramLocation(47.6203442, -122.3297537))
+        assertThat((resultModel as Success).data.list[0].location).isEqualTo(SramLocation(47.6203442, -122.3297537))
     }
 
     @Test

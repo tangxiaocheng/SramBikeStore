@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import app.sram.bikestore.BikeStoreDetailFragment.Companion.ARG_STORE_ITEM
 import app.sram.bikestore.GoogleMapWrapperFragment
 import app.sram.bikestore.R
 import app.sram.bikestore.data.*
@@ -20,25 +23,16 @@ import javax.inject.Inject
 
 class MainFragment : DaggerFragment(), MainFragmentCallback {
 
-    companion object {
-        fun newInstance(location: ScramLocation) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(ARG_LOCATION, location)
-                }
-            }
-    }
-
-    private var location: ScramLocation = HOME
+    private var location: SramLocation = HOME
 
     @Inject
     lateinit var fragmentPresenter: MainFragmentPresenter
 
-    @Inject
+    //    @Inject
     lateinit var adapter: BikeStoreListAdapter
 
-    @Inject
-    lateinit var linearLayoutManager: LinearLayoutManager
+//    @Inject
+//    lateinit var linearLayoutManager: LinearLayoutManager
 
     private lateinit var binding: FragmentMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +51,17 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        loadData(location, false)
+    }
+
     private fun initView() {
-        binding.recyclerView.layoutManager = linearLayoutManager
+        adapter = BikeStoreListAdapter {
+            findNavController().navigate(R.id.bikeStoreDetailFragment, bundleOf(ARG_STORE_ITEM to it))
+        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
         binding.refreshSrl.setColorSchemeResources(R.color.colorAccent)
         binding.refreshSrl.setOnRefreshListener {
@@ -70,12 +73,6 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
             .replace(R.id.map_fragment_view, GoogleMapWrapperFragment.newInstance(location)).commit()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-        loadData(location, false)
-    }
-
     /**
      * Using [com.uber.autodispose.AutoDispose] to provide the scope of binding result from server.
      * Currently, the life cycle scope is from onCreate to onDestroy.
@@ -83,7 +80,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
      * If we want to refresh the data every time when the app is brought to foreground, we could simply put this method onResume.
      * In this case, the network will be automatically cancelled upon onPause.
      */
-    private fun loadData(location: ScramLocation, refresh: Boolean) {
+    private fun loadData(location: SramLocation, refresh: Boolean) {
         fragmentPresenter.loadData(location, refresh)
     }
 

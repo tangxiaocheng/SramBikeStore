@@ -20,7 +20,7 @@ data class BikeStoreEntity(
     val rating: Float,
     val vicinity: String,
     @Embedded
-    val location: ScramLocation,
+    val location: SramLocation,
     @Embedded
     val photo: Photo?
 )

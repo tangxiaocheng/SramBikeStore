@@ -7,7 +7,6 @@ import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.IOException
 import java.lang.reflect.Type
-import java.nio.charset.StandardCharsets
 
 private fun getFileFromPath(obj: Any, fileName: String?): File {
     val classLoader = obj.javaClass.classLoader!!
@@ -17,10 +16,11 @@ private fun getFileFromPath(obj: Any, fileName: String?): File {
 
 @Throws(IOException::class)
 fun readFileToString(path: String, obj: Any): String {
-    return FileUtils.readFileToString(
-        getFileFromPath(obj, path),
-        StandardCharsets.UTF_8
-    )!!
+    return FileUtils.fileRead(getFileFromPath(obj, path).absolutePath)
+//    return FileUtils.readFileToString(
+//        getFileFromPath(obj, path),
+//        StandardCharsets.UTF_8
+//    )!!
 }
 
 fun parseJsonToList(mockBody: String, type: Type?): MapApiResponse {

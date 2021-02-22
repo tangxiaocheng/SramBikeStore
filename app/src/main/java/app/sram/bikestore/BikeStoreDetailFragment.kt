@@ -3,40 +3,48 @@ package app.sram.bikestore
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import android.view.*
+import androidx.fragment.app.Fragment
 import app.sram.bikestore.data.BikeStoreItem
-import app.sram.bikestore.databinding.ActivityBikeStoreDetailBinding
+import app.sram.bikestore.databinding.FragmentBikeStoreDetailBinding
 import app.sram.bikestore.util.formatDistance
-import app.sram.bikestore.util.photoUrl
 import coil.load
 
-/*
-* An activity display the detail information of a BikeStore.
-* It only receives a [app.sram.bikestore.data.BikeStoreItem] argument.
-* */
-class BikeStoreDetailActivity : AppCompatActivity() {
+class BikeStoreDetailFragment : Fragment() {
+
     companion object {
         const val ARG_STORE_ITEM = "KEY_BIKE_STORE_ITEM"
+        fun newInstance(bikeStoreItem: BikeStoreItem) =
+            BikeStoreDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_STORE_ITEM, bikeStoreItem)
+                }
+            }
     }
 
     private lateinit var bikeStoreItem: BikeStoreItem
-    private lateinit var binding: ActivityBikeStoreDetailBinding
+    private lateinit var binding: FragmentBikeStoreDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        intent?.let {
-            bikeStoreItem = it.getParcelableExtra(ARG_STORE_ITEM)!!
+
+        arguments?.let {
+            bikeStoreItem = it.getParcelable(ARG_STORE_ITEM)!!
         }
-        initView()
-        bindData()
     }
 
-    private fun initView() {
-        binding = ActivityBikeStoreDetailBinding.inflate(layoutInflater)
-        setSupportActionBar(binding.detailActivityToolbar)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentBikeStoreDetailBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindData()
     }
 
     private fun bindData() {
@@ -46,7 +54,7 @@ class BikeStoreDetailActivity : AppCompatActivity() {
             binding.storePhotoIv.load(photoUrl)
             binding.storeNameTv.text = name
             binding.storeAddressTv.text = vicinity
-            supportFragmentManager.beginTransaction()
+            parentFragmentManager.beginTransaction()
                 .replace(
                     R.id.map_fragment_view,
                     GoogleMapWrapperFragment.newInstance(location)
@@ -55,9 +63,9 @@ class BikeStoreDetailActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_share, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_share, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -79,7 +87,9 @@ class BikeStoreDetailActivity : AppCompatActivity() {
             putExtra(Intent.EXTRA_SUBJECT, title)
             putExtra(Intent.EXTRA_TEXT, subject)
         }
-        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+        if (requireActivity().packageManager != null &&
+            intent.resolveActivity(requireActivity().packageManager) != null
+        ) {
             startActivity(intent)
         }
     }

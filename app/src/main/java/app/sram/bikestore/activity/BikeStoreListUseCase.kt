@@ -19,12 +19,12 @@ class BikeStoreListUseCase @Inject constructor(
     @UIScheduler private val mainScheduler: Scheduler,
     private val entityToItemMapper: EntityToItemMapper
 ) {
-    fun execute(location: ScramLocation, refresh: Boolean): Single<ResultModel<List<BikeStoreItem>>> {
+    fun execute(location: SramLocation, refresh: Boolean): Single<ResultModel<List<BikeStoreItem>>> {
         return Single.fromCallable { bikeRepo.list(location, refresh) }.subscribeOn(ioScheduler)
             .map { mapToAdapterModel(it, location) }.observeOn(mainScheduler)
     }
 
-    private fun mapToAdapterModel(resultModel: ResultModel<BikeStoreData>, deviceLocation: ScramLocation):
+    private fun mapToAdapterModel(resultModel: ResultModel<BikeStoreData>, deviceLocation: SramLocation):
         ResultModel<List<BikeStoreItem>> {
             return when (resultModel) {
                 is Success -> Success(

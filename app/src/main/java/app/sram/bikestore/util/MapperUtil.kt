@@ -12,14 +12,16 @@ import app.sram.bikestore.data.*
 * 2, Processing all the computing logic here instead of computing it in the Adapter class.
 * */
 fun entityToItem(entity: BikeStoreEntity, distance: Float): BikeStoreItem {
-    return BikeStoreItem(distance = distance,
+    return BikeStoreItem(
+        distance = distance,
         formatDistance = formatDistance(distance),
         photoUrl = entity.photo?.photoUrl() ?: PHOTO_HOLDER_URL,
         name = entity.name,
         rating = entity.rating,
         userRatingsTotal = entity.userRatingsTotal,
         vicinity = entity.vicinity,
-        location = entity.location)
+        location = entity.location
+    )
 }
 
 /**

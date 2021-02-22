@@ -13,7 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
-val TEST_PARAM = ScramLocation(47.584166043000366, -122.15145292817319)
+val TEST_PARAM = SramLocation(47.584166043000366, -122.15145292817319)
 
 @RunWith(RobolectricTestRunner::class)
 class BikeStoreListUseCaseTest {

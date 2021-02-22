@@ -1,24 +1,20 @@
 package app.sram.bikestore.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import app.sram.bikestore.BikeStoreDetailActivity
-import app.sram.bikestore.R
 import app.sram.bikestore.data.BikeStoreItem
 import app.sram.bikestore.databinding.BikeStoreListItemBinding
 import app.sram.bikestore.di.ui.FragmentScope
-import app.sram.bikestore.util.formatDistance
-import app.sram.bikestore.util.photoUrl
 import coil.load
-import javax.inject.Inject
+
 @FragmentScope
-class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStoreListAdapter.ViewHolder>() {
+class BikeStoreListAdapter constructor(private val onItemClicked: (BikeStoreItem) -> Unit) :
+    RecyclerView.Adapter<BikeStoreListAdapter.ViewHolder>() {
 
     private val stateList: MutableList<BikeStoreItem> = ArrayList()
 
@@ -29,7 +25,9 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
                 parent,
                 false
             )
-        )
+        ) {
+            onItemClicked(stateList[it])
+        }
     }
 
     fun fresh() {
@@ -60,16 +58,10 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
         holder.ratingBar.rating = bikeStoreItem.rating
         holder.ratingTv.text = bikeStoreItem.rating.toString()
         holder.totalRatingTv.text = "(${bikeStoreItem.userRatingsTotal})"
-        holder.root.setOnClickListener {
-            Intent(it.context, BikeStoreDetailActivity::class.java).run {
-                this.putExtra(BikeStoreDetailActivity.ARG_STORE_ITEM, bikeStoreItem)
-                it.context.startActivity(this)
-            }
-        }
         holder.storePhotoIv.load(bikeStoreItem.photoUrl)
     }
 
-    inner class ViewHolder(binding: BikeStoreListItemBinding) :
+    inner class ViewHolder(binding: BikeStoreListItemBinding, onItemClick: (position: Int) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         val stateNameTv: TextView = binding.storeNameTv
         val ratingBar: RatingBar = binding.storeRb
@@ -77,6 +69,9 @@ class BikeStoreListAdapter @Inject constructor() : RecyclerView.Adapter<BikeStor
         val ratingTv: TextView = binding.ratingTv
         val storeDistTv: TextView = binding.storeDistTv
         val totalRatingTv: TextView = binding.totalRatingTv
-        val root = binding.root
+        private val root = binding.root
+        init {
+            root.setOnClickListener { onItemClick(adapterPosition) }
+        }
     }
 }

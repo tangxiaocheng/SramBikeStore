@@ -14,6 +14,4 @@ abstract class ActivityModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = [MainFragment.Module::class])
     abstract fun contributeMainFragment(): MainFragment
-
-
 }

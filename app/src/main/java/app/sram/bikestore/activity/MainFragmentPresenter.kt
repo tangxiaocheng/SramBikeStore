@@ -16,7 +16,7 @@ class MainFragmentPresenter @Inject constructor(
     private val scopeProvider: ScopeProvider,
     private val mainFragmentCallback: MainFragmentCallback
 ) {
-    fun loadData(location: ScramLocation, refresh: Boolean) {
+    fun loadData(location: SramLocation, refresh: Boolean) {
         useCase.execute(location, refresh)
             .`as`(autoDisposable(scopeProvider))
             .subscribe(

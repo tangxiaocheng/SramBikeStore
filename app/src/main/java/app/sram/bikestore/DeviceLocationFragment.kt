@@ -6,15 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import app.sram.bikestore.data.ARG_LOCATION
 import app.sram.bikestore.data.HOME
-import app.sram.bikestore.data.ScramLocation
 import app.sram.bikestore.di.ui.FragmentScope
-import app.sram.bikestore.util.toScramLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Provides
 import dagger.android.support.DaggerFragment
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 /*
@@ -26,7 +27,6 @@ class DeviceLocationFragment : DaggerFragment() {
 
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var callback: Callback
 
     companion object {
         fun newInstance() = DeviceLocationFragment()
@@ -47,23 +47,11 @@ class DeviceLocationFragment : DaggerFragment() {
     }
 
     private fun updateLocation(location: Location?) {
-        if (location == null) {
-            if(this::callback.isInitialized){
-                callback.onLocationReady(HOME)
-            }else{
-                throw RuntimeException("callback has not been set")
-            }
-        } else {
-            callback.onLocationReady(location.toScramLocation())
-        }
-    }
-
-    fun setCallback(callback: Callback) {
-        this.callback = callback
-    }
-
-    interface Callback {
-        fun onLocationReady(location: ScramLocation)
+        findNavController().navigate(
+            R.id.mainFragment,
+            bundleOf(ARG_LOCATION to (location ?: HOME)),
+            NavOptions.Builder().setPopUpTo(R.id.deviceLocationFragment, true).build()
+        )
     }
 
     @dagger.Module
