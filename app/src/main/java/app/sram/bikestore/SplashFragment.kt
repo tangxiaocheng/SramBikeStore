@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResultListener
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import app.sram.bikestore.DeviceLocationFragment.Companion.REQUEST_KEY_LOCATION
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import app.sram.bikestore.data.ARG_LOCATION
 import app.sram.bikestore.data.HOME
 import app.sram.bikestore.data.SramLocation
@@ -22,20 +20,15 @@ import com.uber.autodispose.ScopeProvider
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 
 class SplashFragment : Fragment() {
-    lateinit var navController: NavController
     lateinit var viewForSnackBar: View
     lateinit var binding: FragmentSplashBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        bind(AndroidLifecycleScopeProvider.from(this))
-    }
+    private val requiredPermission = Manifest.permission.ACCESS_COARSE_LOCATION
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentSplashBinding.inflate(inflater)
         viewForSnackBar = binding.root
         return binding.root
@@ -43,25 +36,7 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-    }
-
-    private val requiredPermission = Manifest.permission.ACCESS_COARSE_LOCATION
-
-    private fun bind(scopeProvider: ScopeProvider) {
-        kickOffMainFlow(scopeProvider)
-    }
-
-    private fun bindDeviceLocationFragment() {
-        setFragmentResultListener(REQUEST_KEY_LOCATION) { _: String, bundle ->
-            val location = bundle.getParcelable<SramLocation>(DeviceLocationFragment.LOCATION_BUNDLE_KEY)!!
-            bindMainFragment(location)
-        }
-
-        val fragment = DeviceLocationFragment.newInstance()
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit()
+        kickOffMainFlow(AndroidLifecycleScopeProvider.from(this))
     }
 
     private fun kickOffMainFlow(scopeProvider: ScopeProvider) {
@@ -70,27 +45,36 @@ class SplashFragment : Fragment() {
             .`as`(AutoDispose.autoDisposable(scopeProvider))
             .subscribe { granted ->
                 if (granted) {
-                    bindDeviceLocationFragment()
+                    navigateToDeviceLocationFragment()
                 } else {
                     onLocationPermissionDenied()
                 }
             }
     }
 
+    private fun navigateToDeviceLocationFragment() {
+        findNavController().navigate(
+            R.id.deviceLocationFragment,
+            null,
+            NavOptions.Builder().setPopUpTo(R.id.splashFragment, true).build()
+        )
+    }
+
     private fun onLocationPermissionDenied() {
         showSnackBar(getString(R.string.apply_default_location))
-        bindMainFragment(HOME)
+        navigateToMainFragment(HOME)
     }
 
     private fun showSnackBar(message: String) {
         Snackbar.make(viewForSnackBar, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun bindMainFragment(sramLocation: SramLocation) {
+    private fun navigateToMainFragment(sramLocation: SramLocation) {
 
-        navController.navigate(R.id.mainFragment, bundleOf(ARG_LOCATION to sramLocation))
-//        parentFragmentManager.beginTransaction()
-//            .replace(R.id.container, MainFragment.newInstance(sramLocation))
-//            .commit()
+        findNavController().navigate(
+            R.id.mainFragment,
+            bundleOf(ARG_LOCATION to sramLocation),
+            NavOptions.Builder().setPopUpTo(R.id.splashFragment, true).build()
+        )
     }
 }

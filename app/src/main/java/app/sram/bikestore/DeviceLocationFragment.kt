@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import app.sram.bikestore.data.ARG_LOCATION
 import app.sram.bikestore.data.HOME
 import app.sram.bikestore.di.ui.FragmentScope
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -28,8 +30,6 @@ class DeviceLocationFragment : DaggerFragment() {
 
     companion object {
         fun newInstance() = DeviceLocationFragment()
-        const val REQUEST_KEY_LOCATION = "REQUEST_KEY_LOCATION"
-        const val LOCATION_BUNDLE_KEY = "LOCATION_BUNDLE_KEY"
     }
 
     override fun onCreateView(
@@ -47,7 +47,11 @@ class DeviceLocationFragment : DaggerFragment() {
     }
 
     private fun updateLocation(location: Location?) {
-        setFragmentResult(REQUEST_KEY_LOCATION, bundleOf(LOCATION_BUNDLE_KEY to (location ?: HOME)))
+        findNavController().navigate(
+            R.id.mainFragment,
+            bundleOf(ARG_LOCATION to (location ?: HOME)),
+            NavOptions.Builder().setPopUpTo(R.id.deviceLocationFragment, true).build()
+        )
     }
 
     @dagger.Module

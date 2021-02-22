@@ -37,11 +37,5 @@
     <fragment
         android:id="@+id/bikeStoreDetailFragment"
         android:name="app.sram.bikestore.BikeStoreDetailFragment"
-        android:label="BikeStoreDetailFragment"
-        app:startDestination="@id/action_bikeStoreDetailFragment_to_mainFragment">
-        <action
-            android:id="@+id/action_bikeStoreDetailFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-
+        android:label="BikeStoreDetailFragment" />
 </navigation>

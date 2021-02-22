@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.sram.bikestore.BikeStoreDetailFragment.Companion.ARG_STORE_ITEM
 import app.sram.bikestore.GoogleMapWrapperFragment
@@ -24,21 +23,12 @@ import javax.inject.Inject
 
 class MainFragment : DaggerFragment(), MainFragmentCallback {
 
-    companion object {
-        fun newInstance(location: SramLocation) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(ARG_LOCATION, location)
-                }
-            }
-    }
-    lateinit var navController: NavController
     private var location: SramLocation = HOME
 
     @Inject
     lateinit var fragmentPresenter: MainFragmentPresenter
 
-//    @Inject
+    //    @Inject
     lateinit var adapter: BikeStoreListAdapter
 
 //    @Inject
@@ -61,13 +51,15 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        loadData(location, false)
+    }
+
     private fun initView() {
         adapter = BikeStoreListAdapter {
-
-            navController.navigate(R.id.bikeStoreDetailFragment, bundleOf(ARG_STORE_ITEM to it))
-
-//            childFragmentManager.beginTransaction()
-//                .replace(R.id.map_fragment_view, BikeStoreDetailFragment.newInstance(it)).commit()
+            findNavController().navigate(R.id.bikeStoreDetailFragment, bundleOf(ARG_STORE_ITEM to it))
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
@@ -79,13 +71,6 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
 
         childFragmentManager.beginTransaction()
             .replace(R.id.map_fragment_view, GoogleMapWrapperFragment.newInstance(location)).commit()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-        initView()
-        loadData(location, false)
     }
 
     /**
