@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import app.sram.bikestore.DeviceLocationFragment.Companion.REQUEST_KEY_LOCATION
-import app.sram.bikestore.activity.MainFragment
+import app.sram.bikestore.data.ARG_LOCATION
 import app.sram.bikestore.data.HOME
 import app.sram.bikestore.data.SramLocation
 import app.sram.bikestore.databinding.FragmentSplashBinding
@@ -19,7 +22,7 @@ import com.uber.autodispose.ScopeProvider
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 
 class SplashFragment : Fragment() {
-
+    lateinit var navController: NavController
     lateinit var viewForSnackBar: View
     lateinit var binding: FragmentSplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +39,11 @@ class SplashFragment : Fragment() {
         binding = FragmentSplashBinding.inflate(inflater)
         viewForSnackBar = binding.root
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
     }
 
     private val requiredPermission = Manifest.permission.ACCESS_COARSE_LOCATION
@@ -79,8 +87,10 @@ class SplashFragment : Fragment() {
     }
 
     private fun bindMainFragment(sramLocation: SramLocation) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.container, MainFragment.newInstance(sramLocation))
-            .commit()
+
+        navController.navigate(R.id.mainFragment, bundleOf(ARG_LOCATION to sramLocation))
+//        parentFragmentManager.beginTransaction()
+//            .replace(R.id.container, MainFragment.newInstance(sramLocation))
+//            .commit()
     }
 }

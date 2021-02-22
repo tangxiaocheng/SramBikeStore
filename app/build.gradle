@@ -51,7 +51,7 @@ android {
 }
 
 scabbard {
-    enabled true
+    enabled false
     failOnError true
     fullBindingGraphValidation true
     qualifiedNames false

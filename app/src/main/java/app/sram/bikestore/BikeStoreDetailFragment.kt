@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import app.sram.bikestore.data.BikeStoreItem
 import app.sram.bikestore.databinding.FragmentBikeStoreDetailBinding
@@ -40,7 +39,6 @@ class BikeStoreDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBikeStoreDetailBinding.inflate(layoutInflater)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.detailActivityToolbar)
         return binding.root
     }
 

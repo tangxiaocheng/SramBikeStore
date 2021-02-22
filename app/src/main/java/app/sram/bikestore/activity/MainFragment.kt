@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import app.sram.bikestore.BikeStoreDetailFragment
+import app.sram.bikestore.BikeStoreDetailFragment.Companion.ARG_STORE_ITEM
 import app.sram.bikestore.GoogleMapWrapperFragment
 import app.sram.bikestore.R
 import app.sram.bikestore.data.*
@@ -29,7 +32,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
                 }
             }
     }
-
+    lateinit var navController: NavController
     private var location: SramLocation = HOME
 
     @Inject
@@ -38,8 +41,8 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
 //    @Inject
     lateinit var adapter: BikeStoreListAdapter
 
-    @Inject
-    lateinit var linearLayoutManager: LinearLayoutManager
+//    @Inject
+//    lateinit var linearLayoutManager: LinearLayoutManager
 
     private lateinit var binding: FragmentMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,10 +64,12 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
     private fun initView() {
         adapter = BikeStoreListAdapter {
 
-            childFragmentManager.beginTransaction()
-                .replace(R.id.map_fragment_view, BikeStoreDetailFragment.newInstance(it)).commit()
+            navController.navigate(R.id.bikeStoreDetailFragment, bundleOf(ARG_STORE_ITEM to it))
+
+//            childFragmentManager.beginTransaction()
+//                .replace(R.id.map_fragment_view, BikeStoreDetailFragment.newInstance(it)).commit()
         }
-        binding.recyclerView.layoutManager = linearLayoutManager
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
         binding.recyclerView.adapter = adapter
         binding.refreshSrl.setColorSchemeResources(R.color.colorAccent)
         binding.refreshSrl.setOnRefreshListener {
@@ -78,6 +83,7 @@ class MainFragment : DaggerFragment(), MainFragmentCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
         initView()
         loadData(location, false)
     }

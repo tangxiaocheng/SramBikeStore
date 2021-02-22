@@ -3,7 +3,6 @@ package app.sram.bikestore.activity
 import android.os.Bundle
 import android.view.View
 import app.sram.bikestore.R
-import app.sram.bikestore.SplashFragment
 import app.sram.bikestore.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.uber.autodispose.ScopeProvider
@@ -27,11 +26,6 @@ class MainActivity : DaggerAppCompatActivity() {
         observeNetworkStatus(from(this))
     }
 
-    override fun onStart() {
-        super.onStart()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, SplashFragment()).commit()
-    }
     private fun observeNetworkStatus(scopeProvider: ScopeProvider) {
         networkStatusHelper.observe(scopeProvider, this::onNetworkStatusUpdated)
     }
