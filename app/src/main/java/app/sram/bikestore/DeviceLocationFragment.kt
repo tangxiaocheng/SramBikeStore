@@ -11,6 +11,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import app.sram.bikestore.data.ARG_LOCATION
 import app.sram.bikestore.data.HOME
+import app.sram.bikestore.databinding.FragmentDeviceLocationBinding
 import app.sram.bikestore.di.ui.FragmentScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -27,17 +28,12 @@ class DeviceLocationFragment : DaggerFragment() {
 
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    companion object {
-        fun newInstance() = DeviceLocationFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_device_location, container, false)
+        return FragmentDeviceLocationBinding.inflate(inflater).root
     }
 
     @SuppressLint("MissingPermission")
