@@ -1,0 +1,104 @@
+class Wyzeconstant{
+    public static final WYZE_MAVEN_CONFIG = "wyze_android_development.properties"
+    public static final MAVEN_US = "https://maven-repo-a.wyzecam.com/repository/maven-releases/"
+    public static final MAVEN_CN = "https://cangku.favorlink.com.cn/repository/hosted_ch/"
+    public static final MAVEN_USERNAME_STR = "maven.username"
+    public static final MAVEN_PASSWORD_STR = "maven.password"
+    public static final MAVEN_URL_STR = "maven.url"
+}
+apply plugin: 'maven'
+def WYZE_PROPERTIES = geWyzeProperties(Wyzeconstant.WYZE_MAVEN_CONFIG)
+def MAVEN_URL = WYZE_PROPERTIES.getProperty(Wyzeconstant.MAVEN_URL_STR)
+def POM_USERNAME = WYZE_PROPERTIES.getProperty(Wyzeconstant.MAVEN_USERNAME_STR)
+def POM_PASSWORD =  WYZE_PROPERTIES.getProperty(Wyzeconstant.MAVEN_PASSWORD_STR)
+def REPO_NAME_BREAK_DOWN = getNameList(project.name)
+def POM_GROUP_ID = "com." + REPO_NAME_BREAK_DOWN[0] + "." + REPO_NAME_BREAK_DOWN[1]
+def POM_ARTIFACT_ID = REPO_NAME_BREAK_DOWN[2]
+def AAR_NAME = "${POM_GROUP_ID}.${POM_ARTIFACT_ID}"
+
+def POM_VERSION = ""
+
+private static Properties geWyzeProperties(String configFileName) {
+    Properties properties = new Properties()
+    def file = new File("${System.properties['user.home']}/${configFileName}")
+    InputStream inputStream = file.newDataInputStream()
+    properties.load(inputStream)
+    inputStream.close()
+    return properties
+}
+
+/*
+ * WyzePluginEventAndroid --> wyze-plugin-event-android -> [wyze, plugin, event, android]
+ * Write a function to map camel string to a low case array
+ * */
+private static String[] getNameList(camelString) {
+    StringBuilder stringBuilder = new StringBuilder()
+    for (char c: camelString.toCharArray()) {
+        char nc = Character.toLowerCase(c)
+        if (Character.isUpperCase(c)) {
+            if (stringBuilder.length() == 0) {
+                stringBuilder.append(nc)
+            } else {
+                stringBuilder.append('-').append(nc)
+            }
+        } else {
+            stringBuilder.append(nc)
+        }
+    }
+    return stringBuilder.toString().split("-")
+}
+
+
+private static String getVersionNumberFromLocal(properties, aarName) {
+    if (properties.getProperty(aarName) != null) {
+        return properties.getProperty(aarName)
+    } else {
+        def WYZE_ANDROID_DEVELOPMENT_FILE = new File("${System.properties['user.home']}/${Wyzeconstant.WYZE_MAVEN_CONFIG}")
+        WYZE_ANDROID_DEVELOPMENT_FILE.append("\n${aarName}=0")
+        return "0"
+    }
+}
+
+private static String increaseVersionNumberByLocal(properties, aarName) {
+    def WYZE_ANDROID_DEVELOPMENT_FILE = new File("${System.properties['user.home']}/${Wyzeconstant.WYZE_MAVEN_CONFIG}")
+    def getVersion = properties.getProperty(aarName)
+    def temp
+    if (getVersion == null) {
+        temp = 1
+    } else {
+        temp = getVersion.toInteger() + 1
+    }
+    properties.setProperty(aarName, "${temp}")
+    properties.store(WYZE_ANDROID_DEVELOPMENT_FILE.newWriter(), null)
+    return "${temp}"
+}
+
+/*
+ *
+ * 打包发布配置开始
+ * REPO_NAME_BREAK_DOWN = [wyze, plugin, event, android]  <------ WyzePluginEventAndroid
+ * */
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            def POM_DEVELOPER = WYZE_PROPERTIES.getProperty('developer')
+            def LOCAL_VERSION = getVersionNumberFromLocal(WYZE_PROPERTIES, AAR_NAME)
+            def POM_VERSION_NUM = LOCAL_VERSION.toInteger() + 1
+            POM_VERSION = "2.25." + POM_DEVELOPER + "." + POM_VERSION_NUM
+            println(POM_GROUP_ID+":"+POM_ARTIFACT_ID+":"+POM_VERSION)
+            repository(url: MAVEN_URL) {
+                authentication(userName: POM_USERNAME, password: POM_PASSWORD)
+                pom.project {
+                    groupId = POM_GROUP_ID
+                    artifactId = POM_ARTIFACT_ID
+                    packaging = "aar"
+                    version = POM_VERSION
+                }
+            }
+        }
+    }
+}
+
+tasks.uploadArchives.doLast {
+    println increaseVersionNumberByLocal(WYZE_PROPERTIES,AAR_NAME)
+}
