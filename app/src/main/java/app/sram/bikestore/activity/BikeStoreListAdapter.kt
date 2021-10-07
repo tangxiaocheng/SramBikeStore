@@ -9,12 +9,9 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.sram.bikestore.BikeStoreDetailActivity
-import app.sram.bikestore.R
 import app.sram.bikestore.data.BikeStoreItem
 import app.sram.bikestore.databinding.BikeStoreListItemBinding
 import app.sram.bikestore.di.ui.FragmentScope
-import app.sram.bikestore.util.formatDistance
-import app.sram.bikestore.util.photoUrl
 import coil.load
 import javax.inject.Inject
 @FragmentScope
